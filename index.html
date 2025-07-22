@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>kinakomaru のポートフォリオ</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+      line-height: 1.6;
+    }
+    header, footer {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+    h1 { font-size: 2em; margin-bottom: 0.2em; }
+    h2 { border-bottom: 2px solid #333; padding-bottom: 0.2em; margin-top: 2em; }
+    .card {
+      border: 1px solid #ccc;
+      border-radius:  eight px;
+      padding: 16px;
+      margin-top: 16px;
+    }
+    .card img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+      margin: 12px 0;
+    }
+    footer {
+      font-size: 0.9em;
+      color: #666;
+      margin-top: 60px;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>kinakomaru のポートフォリオ</h1>
+    <p>ECデータ運用＆ツール開発スペシャリスト</p>
+  </header>
+
+  <main>
+    <section id="services">
+      <h2>主なサービス</h2>
+
+      <div class="card">
+        <h3>▶ 楽天→Yahoo! 商品データ登録自動化</h3>
+        <ul>
+          <li>Excel VBA ＋ 自作フォーマット</li>
+          <li>数千件規模の一括データ変換・CSV／HTML 生成</li>
+        </ul>
+        <img src="screenshots/format_screenshot.png" alt="自作フォーマットのスクリーンショット">
+      </div>
+
+      <div class="card">
+        <h3>▶ 商品画像一括編集ツール</h3>
+        <ul>
+          <li>JavaScript で開発したブラウザ上ツール</li>
+          <li>リネーム／サイズ変更／透かし入れなどを一括処理</li>
+        </ul>
+        <img src="screenshots/image_tool_screenshot.png" alt="画像一括編集ツールのスクリーンショット">
+      </div>
+
+      <div class="card">
+        <h3>▶ Webサイトスクレイピング & CSV生成</h3>
+        <ul>
+          <li>JavaScript ＋ VBA 連携の自作フォーマット</li>
+          <li>商品情報を取得・再構成し、CSV／Excel に出力</li>
+        </ul>
+        <img src="screenshots/scrape_screenshot.png" alt="スクレイピング＆CSV生成のスクリーンショット">
+      </div>
+
+    </section>
+  </main>
+
+  <footer>
+    &copy; 2025 kinakomaru
+  </footer>
+
+</body>
+</html>
