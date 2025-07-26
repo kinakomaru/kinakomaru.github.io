@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>楽天→Yahoo! 自動化フロー | kinakomaru ポートフォリオ</title>
+  <style>
+    /* 必要なら index.html と共通の CSS をここにもペースト */
+  </style>
+</head>
+<body>
+  <header>
+    <h1>楽天→Yahoo! 商品データ登録自動化フロー</h1>
+    <p><a href="index.html">← ポートフォリオトップに戻る</a></p>
+  </header>
+
+  <main>
+    <section>
+      <h2>1. フォーマットの概要</h2>
+      <img src="screenshots/format_screenshot.png" alt="自作フォーマットのスクリーンショット">
+      <p>Excel の独自フォーマットに元データを貼り付けるだけで、Yahoo用CSVが自動生成されます。</p>
+    </section>
+
+    <section>
+      <h2>2. 作業手順</h2>
+      <ol>
+        <li>楽天からエクスポートしたCSVをフォーマットの「元データ」シートに貼り付け</li>
+        <li>「変換実行」マクロを起動（Alt+F8 → Run）</li>
+        <li>出力フォルダにCSV／HTMLが生成される</li>
+      </ol>
+    </section>
+
+    <section>
+      <h2>3. 使用したVBAサンプル</h2>
+      <pre><code>
+Sub ConvertToYahoo()
+  Dim wb As Workbook
+  Dim wsSrc As Worksheet, wsDst As Worksheet
+  ' 省略: データ読み込み・フォーマット変換ロジック
+End Sub
+      </code></pre>
+    </section>
+  </main>
+
+  <footer>
+    &copy; 2025 kinakomaru
+  </footer>
+</body>
+</html>
