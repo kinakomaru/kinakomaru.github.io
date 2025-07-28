@@ -6,33 +6,36 @@
   <style>
     body {
       font-family: sans-serif;
-      max-width: 800px;
+      max-width: 900px;
       margin: 0 auto;
       padding: 20px;
       line-height: 1.6;
     }
-    header, footer {
+    header {
       text-align: center;
       margin-bottom: 40px;
     }
-    h1 { font-size: 2em; margin-bottom: 0.2em; }
-    h2 { border-bottom: 2px solid #333; padding-bottom: 0.2em; margin-top: 2em; }
-    .card {
-      border: 1px solid #ccc;
-      border-radius:  eight px;
-      padding: 16px;
-      margin-top: 16px;
+    nav a {
+      margin: 0 10px;
+      text-decoration: none;
+      color: #007acc;
     }
-    .card img {
-      max-width: 100%;
-      height: auto;
-      display: block;
-      margin: 12px 0;
+    section {
+      margin-bottom: 60px;
+    }
+    h1, h2 {
+      color: #333;
+    }
+    ul {
+      padding-left: 1.2em;
     }
     footer {
+      text-align: center;
       font-size: 0.9em;
-      color: #666;
-      margin-top: 60px;
+      color: #777;
+      margin-top: 80px;
+      border-top: 1px solid #ddd;
+      padding-top: 20px;
     }
   </style>
 </head>
@@ -40,43 +43,69 @@
 
   <header>
     <h1>kinakomaru のポートフォリオ</h1>
-    <p>ECデータ運用＆ツール開発スペシャリスト</p>
+    <nav>
+      <a href="#home">ホーム</a>｜
+      <a href="#services">サービス紹介</a>｜
+      <a href="#examples">実績・事例</a>｜
+      <a href="#profile">プロフィール</a>｜
+      <a href="#contact">お問い合わせ</a>
+    </nav>
   </header>
 
-  <main>
-    <section id="services">
-      <h2>主なサービス</h2>
+  <!-- 1. ホーム -->
+  <section id="home">
+    <h2>ホーム</h2>
+    <p>ECデータ自動化10年のキャリア。週末3時間で数千件のデータ移行を完了。VBA・JavaScript・Power Automateを駆使。</p>
+  </section>
 
-<div class="card">
-  <h3><a href="rakuten-to-yahoo.html">▶ 楽天→Yahoo! 商品データ登録自動化</a></h3>
-  <ul>
-    <li>Excel VBA ＋ 自作フォーマット</li>
-    <li>数千件規模の一括データ変換・CSV／HTML 生成</li>
-  </ul>
-  <img src="screenshots/format_screenshot.png" alt="自作フォーマットのスクリーンショット">
-</div>
+  <!-- 2. サービス紹介 -->
+  <section id="services">
+    <h2>サービス紹介</h2>
 
+    <h3>▶ 楽天→Yahoo! 商品データ登録自動化</h3>
+    <ul>
+      <li>Excelフォーマットでボタン1つの一括変換</li>
+      <li>手作業ミスをゼロに</li>
+    </ul>
 
-      <div class="card">
-        <h3>▶ 商品画像一括編集ツール</h3>
-        <ul>
-          <li>JavaScript で開発したブラウザ上ツール</li>
-          <li>リネーム／サイズ変更／透かし入れなどを一括処理</li>
-        </ul>
-        <img src="screenshots/image_tool_screenshot.png" alt="画像一括編集ツールのスクリーンショット">
-      </div>
+    <h3>▶ 商品画像一括編集ツール</h3>
+    <ul>
+      <li>ブラウザ上でドラッグ＆ドロップ、一括リネーム・リサイズ</li>
+      <li>1分で数百枚を処理</li>
+    </ul>
 
-      <div class="card">
-        <h3>▶ Webサイトスクレイピング & CSV生成</h3>
-        <ul>
-          <li>JavaScript ＋ VBA 連携の自作フォーマット</li>
-          <li>商品情報を取得・再構成し、CSV／Excel に出力</li>
-        </ul>
-        <img src="screenshots/scrape_screenshot.png" alt="スクレイピング＆CSV生成のスクリーンショット">
-      </div>
+    <h3>▶ Webスクレイピング＆CSV生成</h3>
+    <ul>
+      <li>他サイトから情報取得→CSV自動出力</li>
+      <li>コピペ0でフォーマット整形完了</li>
+    </ul>
+  </section>
 
-    </section>
-  </main>
+  <!-- 3. 実績・事例 -->
+  <section id="examples">
+    <h2>実績・事例</h2>
+    <ul>
+      <li>Before: 5,000件のCSVを24時間手作業 → After: 3時間で完了</li>
+      <li>フォーマット導入前後の工数比較グラフ（後ほど挿入予定）</li>
+    </ul>
+  </section>
+
+  <!-- 4. プロフィール -->
+  <section id="profile">
+    <h2>プロフィール</h2>
+    <ul>
+      <li>米穀店店長3.5年→フリー→直雇用</li>
+      <li>大阪在住の二児の母</li>
+      <li>“自動化”で現場の笑顔を増やします</li>
+    </ul>
+  </section>
+
+  <!-- 5. お問い合わせ -->
+  <section id="contact">
+    <h2>お問い合わせ</h2>
+    <p>週末対応OK／NDA可。お気軽にご相談ください。</p>
+    <p>メール：<a href="mailto:your.email@example.com">your.email@example.com</a></p>
+  </section>
 
   <footer>
     &copy; 2025 kinakomaru
