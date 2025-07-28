@@ -3,64 +3,16 @@
 <head>
   <meta charset="UTF-8">
   <title>楽天→Yahoo! 自動化フロー | kinakomaru ポートフォリオ</title>
+  <!-- 既存のスタイルはそのままに、ここだけ追加します -->
+  <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+  <script>
+    mermaid.initialize({ startOnLoad: true, theme: 'default' });
+  </script>
   <style>
-    body { font-family: sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; }
-    header, footer { text-align: center; margin-bottom: 40px; }
-    h1 { font-size: 1.8em; }
-    h2 { margin-top: 2em; border-bottom: 2px solid #333; padding-bottom: .3em; }
-
-    /* ステップリスト */
-    .step-list { list-style: none; counter-reset: step; padding: 0; }
-    .step-list li {
-      position: relative;
-      padding-left: 2.5em;
-      margin-bottom: 1.2em;
-    }
-    .step-list li::before {
-      counter-increment: step;
-      content: counter(step);
-      position: absolute;
-      left: 0; top: 0;
-      width: 2em; height: 2em;
-      line-height: 2em;
+    /* Mermaid 埋め込みを中央寄せ */
+    .mermaid {
       text-align: center;
-      background: #007acc;
-      color: #fff;
-      border-radius: 50%;
-      font-weight: bold;
-    }
-    .step-list .purpose {
-      font-size: 0.9em;
-      color: #555;
-      margin-top: .2em;
-    }
-
-    /* フローチャート */
-    .flowchart {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      margin-top: 2em;
-    }
-    .flowchart .node {
-      position: relative;
-      padding: 12px 20px;
-      border: 1px solid #333;
-      border-radius: 4px;
-      background: #f9f9f9;
-      width: 80%;
-      text-align: center;
-      margin: .5em 0;
-    }
-    .flowchart .node::after {
-      content: "";
-      position: absolute;
-      bottom: -20px; left: 50%;
-      width: 2px; height: 20px;
-      background: #333;
-    }
-    .flowchart .node:last-child::after {
-      display: none;
+      margin: 2em auto;
     }
   </style>
 </head>
@@ -71,56 +23,20 @@
   </header>
 
   <main>
-    <!-- フォーマット画面セクション省略 -->
+    <!-- ここまで既存のフォーマット・手順セクション -->
 
-    <section id="workflow">
-      <h2>作業手順</h2>
-      <!-- ステップリスト -->
-      <ul class="step-list">
-        <li>
-          Sheets("data.csv") を Activate
-          <div class="purpose">data.csv シートを操作対象にするため</div>
-        </li>
-        <li>
-          「HB列項目選択肢を全角スペースに変換する」を実行
-          <div class="purpose">半角スペースの不一致を防ぎ、オプション抽出の精度を上げるため</div>
-        </li>
-        <li>
-          「シートを削除する」を実行
-          <div class="purpose">不要なシートをクリアし、後続処理での混乱を防ぐため</div>
-        </li>
-        <li>
-          「★マクロ実行その1」を実行
-          <div class="purpose">C～L 列の各種データを整形・抽出し、Yahoo 形式に合わせるため</div>
-        </li>
-        <li>
-          「★マクロ実行その2」を実行
-          <div class="purpose">在庫・画像・説明文などの最終整形を行い、CSV 用データを完成させるため</div>
-        </li>
-        <li>
-          「option_csv作成」を実行
-          <div class="purpose">オプション情報だけを抜き出した CSV を生成し、別途管理用に出力するため</div>
-        </li>
-        <li>
-          「在庫データ転記」を実行
-          <div class="purpose">最新の在庫数を Yahoo データに反映し、出品ミスを防ぐため</div>
-        </li>
-        <li>
-          メッセージボックスで「処理が完了しました。」を表示
-          <div class="purpose">ユーザーに処理の完了を通知し、次のアクションを促すため</div>
-        </li>
-      </ul>
-
-      <!-- ビジュアルフローチャート -->
-      <div class="flowchart">
-        <div class="node">1. Activate data.csv sheet</div>
-        <div class="node">2. Convert HB&#x6B04; options → 全角スペース</div>
-        <div class="node">3. Delete unnecessary sheets</div>
-        <div class="node">4. Run “★マクロ実行その1”</div>
-        <div class="node">5. Run “★マクロ実行その2”</div>
-        <div class="node">6. Create option_csv</div>
-        <div class="node">7. Transfer inventory data</div>
-        <div class="node">8. Show completion message</div>
+    <section id="flowchart">
+      <h2>作業フロー</h2>
+      <div class="mermaid">
+        graph TB
+          %% ノード定義（アイコン＋日本語）
+          A[📂 data.csv をアクティブ化] --> B[🔄 全角スペース置換]
+          B --> C[🗑 不要シート削除]
+          C --> D[⚙️ マクロ実行①]
+          D --> E[⚙️ マクロ実行②]
+          E --> F[📑 option_csv 作成]
+          F --> G[📦 在庫データ転記]
+          G --> H[✅ 完了メッセージ表示]
       </div>
     </section>
   </main>
