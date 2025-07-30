@@ -114,67 +114,88 @@
     </p>
   </section>
 
-  <!-- 2. サービス紹介 -->
-  <section id="services">
-    <h2>サービス紹介</h2>
-    <div class="service-carousel">
-      <!-- 商品データ登録 -->
-      <div class="service-card">
-        <h3>■ 商品データ登録（CSV一括登録）</h3>
-        <div class="screenshots">
-          <img src="screenshots/bcart2rakuten.png" alt="業販サイト→楽天市場">
-          <img src="screenshots/rakuten2yahoo.png" alt="楽天→Yahoo!">
-          <img src="screenshots/scraping2data.png" alt="メーカーWEB→商品データ">
-        </div>
+ <!-- 2. サービス紹介 -->
+<section id="services">
+  <h2>サービス紹介</h2>
+  <div class="service-carousel">
+    <!-- ■楽天市場 -->
+    <div class="service-card">
+      <h3>■ 楽天市場</h3>
+      <!-- 横スクロールする見出し3群 -->
+      <div class="screenshots-section">
+        <h4>★ 他サイトから楽天市場へのデータ置換</h4>
         <ul>
           <li>B-cartやsuperdeliveryなどの業販サイト→楽天市場</li>
-          <li>楽天→Yahoo!ショッピング</li>
-          <li>メーカーWEBサイト→商品データ</li>
         </ul>
+        <h4>★ 楽天市場→Yahoo!ショッピングへ置換フォーマット</h4>
         <ul>
-          <li>Excelフォーマットで一括置換（自作フォーマット・日々改良中）</li>
+          <li>Excelフォーマットで一括置換</li>
           <li>最終的には目視・手動で商品名・説明文を確認修正</li>
-          <li>カタログPDF→データ作成も対応</li>
-          <li>メーカーWEBサイトからスクレイピング＆マクロで成型</li>
         </ul>
-        <a href="#detail-data-registration">＜詳しく見る＞</a>
-      </div>
-      <!-- 楽天市場に関するツール -->
-      <div class="service-card">
-        <h3>■ 楽天市場に関するツール</h3>
-        <div class="screenshots">
-          <img src="screenshots/inventory_update.png" alt="在庫一括更新ツール">
-          <img src="screenshots/super_sale.png" alt="スーパーセール申請ツール">
-          <img src="screenshots/price_check.png" alt="価格調査ツール">
-        </div>
+        <h4>★ 楽天市場に関するツール</h4>
         <ul>
           <li>在庫一括更新フォーマット（SKUごとに倉庫対応）</li>
-          <li>スーパーセール申請用コピーページ生成（SKUごとに申請）</li>
-          <li>価格調査フォーマット（楽天API連携、キーワード検索、最安値リスト化）</li>
+          <li>スーパーセール申請用コピーページ生成</li>
+          <li>価格調査フォーマット（楽天API連携）</li>
         </ul>
-        <a href="#detail-rakuten-tools">＜詳しく見る＞</a>
-      </div>
-      <!-- 楽天・yahoo販促業務 -->
-      <div class="service-card">
-        <h3>■ 楽天・Yahoo!販促業務</h3>
-        <div class="screenshots">
-          <img src="screenshots/site_update.png" alt="サイト更新・特集ページ">
-          <img src="screenshots/newsletter.png" alt="レスポンシブメルマガ">
-          <img src="screenshots/banner.png" alt="バナー設置・撤去">
-        </div>
+        <h4>★ 楽天・Yahoo!販促業務</h4>
         <ul>
           <li>サイト更新（特集ページ作成など）</li>
           <li>メルマガ作成（楽天レスポンシブ対応）</li>
-          <li>セール時のバナー設置・撤去</li>
-          <li>CSVを使った商品登録・一括更新</li>
-          <li>SEO対策・キーワード調査・競合調査</li>
-          <li>簡易画像加工（セール日付／ポイント倍率変更）</li>
-          <li>LINE配信作業サポート</li>
+          <li>バナー設置・撤去・CSV一括登録・SEO対策ほか</li>
         </ul>
-        <a href="#detail-promo">＜詳しく見る＞</a>
       </div>
+      <a href="#detail-rakuten">＜詳しく見る＞</a>
     </div>
-  </section>
+
+    <!-- ■画像加工に関するツール -->
+    <div class="service-card">
+      <h3>■ 画像加工に関するツール</h3>
+      <div class="screenshots-section">
+        <h4>★ 画像文字入れ・成型・リネーム加工ツール</h4>
+        <ul>
+          <li>ドラッグ＆ドロップで一括加工</li>
+        </ul>
+        <h4>★ Photoshop／Affinity Photo 自動バッチ</h4>
+        <ul>
+          <li>定期的なバナーや補正を自動化</li>
+        </ul>
+        <h4>★ 簡易補正・文字入れ・バナー作成</h4>
+        <ul>
+          <li>日付変更やポイント倍率変更も即対応</li>
+        </ul>
+      </div>
+      <a href="#detail-image-tools">＜詳しく見る＞</a>
+    </div>
+
+    <!-- ■特集ページ作成ツール -->
+    <div class="service-card">
+      <h3>■ 特集ページ作成ツール</h3>
+      <div class="screenshots-section">
+        <h4>★ 簡単特集ページHTML生成</h4>
+        <ul>
+          <li>商品URLを入力するだけで特集ページを自動作成</li>
+          <li>既存CSSとの衝突を回避</li>
+        </ul>
+      </div>
+      <a href="#detail-feature-page">＜詳しく見る＞</a>
+    </div>
+
+    <!-- ■WEBスクレイピングツール -->
+    <div class="service-card">
+      <h3>■ WEBスクレイピングツール</h3>
+      <div class="screenshots-section">
+        <h4>★ 自動スクレイピング＆CSV生成</h4>
+        <ul>
+          <li>JavaScript＋マクロ＋Power Automate連携</li>
+          <li>BtoBサイト向け登録業務を半自動化</li>
+        </ul>
+      </div>
+      <a href="#detail-scraping">＜詳しく見る＞</a>
+    </div>
+
+  </div>
+</section>
 
   <!-- 他のセクションはそのまま -->
 
