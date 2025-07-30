@@ -23,19 +23,64 @@
     section {
       margin-bottom: 60px;
     }
-    h1, h2 {
+    h1, h2, h3 {
       color: #333;
     }
-    ul {
+    /* プロフィール */
+    #profile p {
+      background: #f0f8ff;
+      padding: 16px;
+      border-left: 4px solid #007acc;
+    }
+    /* サービス紹介カルーセル */
+    .service-carousel {
+      display: flex;
+      gap: 20px;
+      overflow-x: auto;
+      padding-bottom: 10px;
+      scroll-snap-type: x mandatory;
+    }
+    .service-card {
+      flex: 0 0 320px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      padding: 16px;
+      background: #fff;
+      scroll-snap-align: start;
+    }
+    .service-card h3 {
+      margin-top: 0;
+      font-size: 1.1em;
+    }
+    .service-card .screenshots {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      margin: 12px 0;
+    }
+    .service-card .screenshots img {
+      flex: 0 0 100px;
+      height: auto;
+      border-radius: 4px;
+      border: 1px solid #ddd;
+    }
+    .service-card ul {
       padding-left: 1.2em;
     }
-    footer {
-      text-align: center;
-      font-size: 0.9em;
-      color: #777;
-      margin-top: 80px;
-      border-top: 1px solid #ddd;
-      padding-top: 20px;
+    .service-card a {
+      display: inline-block;
+      margin-top: 12px;
+      color: #007acc;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    /* スクロールバーを薄く */
+    .service-carousel::-webkit-scrollbar {
+      height: 8px;
+    }
+    .service-carousel::-webkit-scrollbar-thumb {
+      background: rgba(0,124,204,0.5);
+      border-radius: 4px;
     }
   </style>
 </head>
@@ -58,54 +103,80 @@
     <p>ECデータ自動化10年のキャリア。週末3時間で数千件のデータ移行を完了。VBA・JavaScript・Power Automateを駆使。</p>
   </section>
 
-  <!-- 2. サービス紹介 -->
-  <section id="services">
-    <h2>サービス紹介</h2>
-
-    <h3>▶ 楽天→Yahoo! 商品データ登録自動化</h3>
-    <ul>
-      <li>Excelフォーマットでボタン1つの一括変換</li>
-      <li>手作業ミスをゼロに</li>
-    </ul>
-
-    <h3>▶ 商品画像一括編集ツール</h3>
-    <ul>
-      <li>ブラウザ上でドラッグ＆ドロップ、一括リネーム・リサイズ</li>
-      <li>1分で数百枚を処理</li>
-    </ul>
-
-    <h3>▶ Webスクレイピング＆CSV生成</h3>
-    <ul>
-      <li>他サイトから情報取得→CSV自動出力</li>
-      <li>コピペ0でフォーマット整形完了</li>
-    </ul>
-  </section>
-
-  <!-- 3. 実績・事例 -->
-  <section id="examples">
-    <h2>実績・事例</h2>
-    <ul>
-      <li>Before: 5,000件のCSVを24時間手作業 → After: 3時間で完了</li>
-      <li>フォーマット導入前後の工数比較グラフ（後ほど挿入予定）</li>
-    </ul>
-  </section>
-
   <!-- 4. プロフィール -->
   <section id="profile">
     <h2>プロフィール</h2>
-    <ul>
-      <li>米穀店店長3.5年→フリー→直雇用</li>
-      <li>大阪在住の二児の母</li>
-      <li>“自動化”で現場の笑顔を増やします</li>
-    </ul>
+    <p>
+      10年以上にわたり、楽天市場・Yahoo!ショッピング・Amazonなど主要ECモールの運営に携わってきました。<br>
+      ほか、B-cartやスーパーデリバリーなどの業販サイトの商品登録にも携わっています。<br>
+      楽天市場の店長として3年半勤め、月商2000万達成。その後、育児との両立のため退職、フリーランスにてEC業務に従事→<br>
+      受注先の会社様より直接雇用頂き、現在フルタイム勤務しています。
+    </p>
   </section>
 
-  <!-- 5. お問い合わせ -->
-  <section id="contact">
-    <h2>お問い合わせ</h2>
-    <p>週末対応OK／NDA可。お気軽にご相談ください。</p>
-    <p>メール：<a href="mailto:your.email@example.com">your.email@example.com</a></p>
+  <!-- 2. サービス紹介 -->
+  <section id="services">
+    <h2>サービス紹介</h2>
+    <div class="service-carousel">
+      <!-- 商品データ登録 -->
+      <div class="service-card">
+        <h3>■ 商品データ登録（CSV一括登録）</h3>
+        <div class="screenshots">
+          <img src="screenshots/bcart2rakuten.png" alt="業販サイト→楽天市場">
+          <img src="screenshots/rakuten2yahoo.png" alt="楽天→Yahoo!">
+          <img src="screenshots/scraping2data.png" alt="メーカーWEB→商品データ">
+        </div>
+        <ul>
+          <li>B-cartやsuperdeliveryなどの業販サイト→楽天市場</li>
+          <li>楽天→Yahoo!ショッピング</li>
+          <li>メーカーWEBサイト→商品データ</li>
+        </ul>
+        <ul>
+          <li>Excelフォーマットで一括置換（自作フォーマット・日々改良中）</li>
+          <li>最終的には目視・手動で商品名・説明文を確認修正</li>
+          <li>カタログPDF→データ作成も対応</li>
+          <li>メーカーWEBサイトからスクレイピング＆マクロで成型</li>
+        </ul>
+        <a href="#detail-data-registration">＜詳しく見る＞</a>
+      </div>
+      <!-- 楽天市場に関するツール -->
+      <div class="service-card">
+        <h3>■ 楽天市場に関するツール</h3>
+        <div class="screenshots">
+          <img src="screenshots/inventory_update.png" alt="在庫一括更新ツール">
+          <img src="screenshots/super_sale.png" alt="スーパーセール申請ツール">
+          <img src="screenshots/price_check.png" alt="価格調査ツール">
+        </div>
+        <ul>
+          <li>在庫一括更新フォーマット（SKUごとに倉庫対応）</li>
+          <li>スーパーセール申請用コピーページ生成（SKUごとに申請）</li>
+          <li>価格調査フォーマット（楽天API連携、キーワード検索、最安値リスト化）</li>
+        </ul>
+        <a href="#detail-rakuten-tools">＜詳しく見る＞</a>
+      </div>
+      <!-- 楽天・yahoo販促業務 -->
+      <div class="service-card">
+        <h3>■ 楽天・Yahoo!販促業務</h3>
+        <div class="screenshots">
+          <img src="screenshots/site_update.png" alt="サイト更新・特集ページ">
+          <img src="screenshots/newsletter.png" alt="レスポンシブメルマガ">
+          <img src="screenshots/banner.png" alt="バナー設置・撤去">
+        </div>
+        <ul>
+          <li>サイト更新（特集ページ作成など）</li>
+          <li>メルマガ作成（楽天レスポンシブ対応）</li>
+          <li>セール時のバナー設置・撤去</li>
+          <li>CSVを使った商品登録・一括更新</li>
+          <li>SEO対策・キーワード調査・競合調査</li>
+          <li>簡易画像加工（セール日付／ポイント倍率変更）</li>
+          <li>LINE配信作業サポート</li>
+        </ul>
+        <a href="#detail-promo">＜詳しく見る＞</a>
+      </div>
+    </div>
   </section>
+
+  <!-- 他のセクションはそのまま -->
 
   <footer>
     &copy; 2025 kinakomaru
