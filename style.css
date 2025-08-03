@@ -1,72 +1,147 @@
- <style>
-    body {
-      font-family: sans-serif;
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 20px;
-      line-height: 1.6;
-    }
-    header {
-      text-align: center;
-      margin-bottom: 40px;
-    }
-    nav a {
-      margin: 0 10px;
-      text-decoration: none;
-      color: #007acc;
-    }
-    section {
-      margin-bottom: 60px;
-    }
-    h1, h2, h3, h4 {
-      color: #333;
-      margin: 0 0 .5em;
-    }
-    ul {
-      padding-left: 1.2em;
-      margin: 0;
-    }
-    footer {
-      text-align: center;
-      font-size: 0.9em;
-      color: #777;
-      margin-top: 80px;
-      border-top: 1px solid #ddd;
-      padding-top: 20px;
-    }
+/* ─ 基本設定 ─ */
+body {
+  font-family: "ヒラギノ角ゴ ProN","Yu Gothic","Meiryo",sans-serif;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 20px;
+  line-height: 1.6;
+  background-color: #f7f7f7;
+  color: #333;
+}
 
-    /* プロフィール */
-    #profile p {
-      background: #f0f8ff;
-      padding: 16px;
-      border-left: 4px solid #007acc;
-    }
+/* ─ ヘッダー ─ */
+header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+nav a {
+  margin: 0 10px;
+  text-decoration: none;
+  color: #007acc;
+  transition: color .2s;
+}
+nav a:hover {
+  color: #005b99;
+}
 
-    /* サービス紹介カルーセル */
-    .service-carousel {
-      display: flex;
-      gap: 16px;
-      overflow-x: auto;
-      scroll-snap-type: x mandatory;
-      padding: 12px 0;
-    }
-    .service-carousel .item {
-      flex: 0 0 260px;
-      scroll-snap-align: start;
-    }
-    .service-carousel h4 {
-      margin: 0 0 8px;
-      font-size: 1em;
-    }
-    .service-carousel ul {
-      padding-left: 1.2em;
-      margin: 0;
-    }
-    .service-carousel::-webkit-scrollbar {
-      height: 6px;
-    }
-    .service-carousel::-webkit-scrollbar-thumb {
-      background: rgba(0,124,204,0.5);
-      border-radius: 3px;
-    }
-  </style>
+/* ─ セクション共通 ─ */
+section {
+  margin-bottom: 60px;
+  background: #fff;
+  padding: 24px;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.06);
+}
+section h2 {
+  border-bottom: 2px solid #e0e0e0;
+  padding-bottom: 8px;
+  margin-bottom: 24px;
+}
+
+/* ─ 見出し ─ */
+h1, h2, h3, h4 {
+  color: #333;
+  margin: 0 0 .5em;
+}
+h3 {
+  font-size: 1.4em;
+  margin-top: 1em;
+  margin-bottom: .8em;
+}
+h4 {
+  font-size: 1.1em;
+  margin-bottom: .6em;
+}
+
+/* ─ プロフィール ─ */
+#profile p {
+  background: #e8f4ff;
+  padding: 16px;
+  border-left: 5px solid #007acc;
+  border-radius: 4px;
+}
+
+/* ─ サービス紹介：カルーセル全体 ─ */
+.service-card {
+  margin-bottom: 32px;
+}
+.service-card h3 {
+  margin: 0 0 16px;
+}
+
+/* ─ 横スクロールアイテム ─ */
+.service-carousel {
+  display: flex;
+  gap: 16px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding-bottom: 8px;
+}
+.service-carousel .item {
+  flex: 0 0 260px;
+  scroll-snap-align: start;
+  background: #fff;
+  padding: 16px;
+  border-radius: 8px;
+  border: 1px solid #ececec;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+  transition: transform .2s, box-shadow .2s;
+}
+.service-carousel .item:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+.service-carousel h4 {
+  margin: 0 0 8px;
+}
+.service-carousel ul {
+  padding-left: 1.2em;
+  margin: 0;
+}
+
+/* スクロールバー（WebKit系） */
+.service-carousel::-webkit-scrollbar {
+  height: 6px;
+}
+.service-carousel::-webkit-scrollbar-thumb {
+  background: rgba(0,124,204,0.4);
+  border-radius: 3px;
+}
+
+/* ─ 実績・事例リスト ─ */
+#examples ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+#examples li {
+  position: relative;
+  padding-left: 1.2em;
+  margin-bottom: .8em;
+}
+#examples li::before {
+  content: "•";
+  position: absolute;
+  left: 0;
+  color: #007acc;
+}
+
+/* ─ お問い合わせ ─ */
+#contact a {
+  color: #007acc;
+  text-decoration: none;
+  font-weight: bold;
+}
+#contact a:hover {
+  text-decoration: underline;
+}
+
+/* ─ フッター ─ */
+footer {
+  text-align: center;
+  font-size: 0.9em;
+  color: #777;
+  margin-top: 80px;
+  border-top: 1px solid #ddd;
+  padding-top: 20px;
+}
