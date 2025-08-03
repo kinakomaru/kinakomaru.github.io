@@ -1,207 +1,182 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
-  <meta charset="UTF-8">
-  <title>kinakomaru のポートフォリオ</title>
-  <style>
-    body {
-      font-family: sans-serif;
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 20px;
-      line-height: 1.6;
-    }
-    header {
-      text-align: center;
-      margin-bottom: 40px;
-    }
-    nav a {
-      margin: 0 10px;
-      text-decoration: none;
-      color: #007acc;
-    }
-    section {
-      margin-bottom: 60px;
-    }
-    h1, h2, h3 {
-      color: #333;
-    }
-    /* プロフィール */
-    #profile p {
-      background: #f0f8ff;
-      padding: 16px;
-      border-left: 4px solid #007acc;
-    }
-    /* サービス紹介カルーセル */
-    .service-carousel {
-      display: flex;
-      gap: 20px;
-      overflow-x: auto;
-      padding-bottom: 10px;
-      scroll-snap-type: x mandatory;
-    }
-    .service-card {
-      flex: 0 0 320px;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      padding: 16px;
-      background: #fff;
-      scroll-snap-align: start;
-    }
-    .service-card h3 {
-      margin-top: 0;
-      font-size: 1.1em;
-    }
-    .service-card .screenshots {
-      display: flex;
-      gap: 8px;
-      overflow-x: auto;
-      margin: 12px 0;
-    }
-    .service-card .screenshots img {
-      flex: 0 0 100px;
-      height: auto;
-      border-radius: 4px;
-      border: 1px solid #ddd;
-    }
-    .service-card ul {
-      padding-left: 1.2em;
-    }
-    .service-card a {
-      display: inline-block;
-      margin-top: 12px;
-      color: #007acc;
-      text-decoration: none;
-      font-weight: bold;
-    }
-    /* スクロールバーを薄く */
-    .service-carousel::-webkit-scrollbar {
-      height: 8px;
-    }
-    .service-carousel::-webkit-scrollbar-thumb {
-      background: rgba(0,124,204,0.5);
-      border-radius: 4px;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <title>kinakomaru のポートフォリオ</title>
+    <style>
+        /* 省略: 既存スタイル */
+
+        /* サービス紹介カルーセル全体 */
+        .service-carousel {
+            display: flex;
+            gap: 20px;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            padding-bottom: 10px;
+        }
+
+        /* 各大ブロック */
+        .service-card {
+            flex: 0 0 300px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            padding: 16px;
+            background: #fff;
+            scroll-snap-align: start;
+        }
+
+        .service-card h3 {
+            margin-top: 0;
+            font-size: 1.1em;
+        }
+
+        /* 見出し3群を横スクロール */
+        .horiz-scroll {
+            display: flex;
+            gap: 16px;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            padding: 12px 0;
+        }
+
+        .horiz-scroll .item {
+            flex: 0 0 260px;
+            scroll-snap-align: start;
+        }
+
+        .horiz-scroll h4 {
+            margin: 0 0 8px;
+            font-size: 1em;
+        }
+
+        .horiz-scroll ul {
+            padding-left: 1.2em;
+            margin: 0;
+        }
+
+        /* 軽くスクロールバー見た目調整 */
+        .horiz-scroll::-webkit-scrollbar {
+            height: 6px;
+        }
+
+        .horiz-scroll::-webkit-scrollbar-thumb {
+            background: rgba(0, 124, 204, 0.5);
+            border-radius: 3px;
+        }
+
+    </style>
 </head>
+
 <body>
 
-  <header>
-    <h1>kinakomaru のポートフォリオ</h1>
-    <nav>
-      <a href="#home">ホーム</a>｜
-      <a href="#services">サービス紹介</a>｜
-      <a href="#examples">実績・事例</a>｜
-      <a href="#profile">プロフィール</a>｜
-      <a href="#contact">お問い合わせ</a>
-    </nav>
-  </header>
+    <!-- 省略: header／ホーム／プロフィール -->
 
-  <!-- 1. ホーム -->
-  <section id="home">
-    <h2>ホーム</h2>
-    <p>ECデータ自動化10年のキャリア。週末3時間で数千件のデータ移行を完了。VBA・JavaScript・Power Automateを駆使。</p>
-  </section>
+    <!-- 2. サービス紹介 -->
+    <section id="services">
+        <h2>サービス紹介</h2>
+        <div class="service-carousel">
 
-  <!-- 4. プロフィール -->
-  <section id="profile">
-    <h2>プロフィール</h2>
-    <p>
-      10年以上にわたり、楽天市場・Yahoo!ショッピング・Amazonなど主要ECモールの運営に携わってきました。<br>
-      ほか、B-cartやスーパーデリバリーなどの業販サイトの商品登録にも携わっています。<br>
-      楽天市場の店長として3年半勤め、月商2000万達成。その後、育児との両立のため退職、フリーランスにてEC業務に従事→<br>
-      受注先の会社様より直接雇用頂き、現在フルタイム勤務しています。
-    </p>
-  </section>
+            <!-- ■ 楽天市場 -->
+            <div class="service-card">
+                <h3>■ 楽天市場</h3>
+                <div class="horiz-scroll">
+                    <div class="item">
+                        <h4>★ 他サイト → 楽天市場</h4>
+                        <ul>
+                            <li>BtoB・CtoC業販サイトの商品データを一括置換</li>
+                        </ul>
+                    </div>
+                    <div class="item">
+                        <h4>★ 楽天 → Yahoo! ショッピング</h4>
+                        <ul>
+                            <li>Excelフォーマットで一括変換</li>
+                            <li>最終的に目視で商品名・説明文を調整</li>
+                        </ul>
+                    </div>
+                    <div class="item">
+                        <h4>★ 楽天市場に関するツール</h4>
+                        <ul>
+                            <li>在庫一括更新フォーマット（SKU倉庫対応）</li>
+                            <li>スーパーセール申請用コピー生成</li>
+                            <li>価格調査フォーマット（API連携）</li>
+                        </ul>
+                    </div>
+                    <div class="item">
+                        <h4>★ 楽天・Yahoo!販促業務</h4>
+                        <ul>
+                            <li>サイト更新・特集ページ作成</li>
+                            <li>レスポンシブメルマガ作成</li>
+                            <li>バナー設置・撤去／CSV登録／SEO調査／LINE配信</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
 
- <!-- 2. サービス紹介 -->
-<section id="services">
-  <h2>サービス紹介</h2>
-  <div class="service-carousel">
-    <!-- ■楽天市場 -->
-    <div class="service-card">
-      <h3>■ 楽天市場</h3>
-      <!-- 横スクロールする見出し3群 -->
-      <div class="screenshots-section">
-        <h4>★ 他サイトから楽天市場へのデータ置換</h4>
-        <ul>
-          <li>B-cartやsuperdeliveryなどの業販サイト→楽天市場</li>
-        </ul>
-        <h4>★ 楽天市場→Yahoo!ショッピングへ置換フォーマット</h4>
-        <ul>
-          <li>Excelフォーマットで一括置換</li>
-          <li>最終的には目視・手動で商品名・説明文を確認修正</li>
-        </ul>
-        <h4>★ 楽天市場に関するツール</h4>
-        <ul>
-          <li>在庫一括更新フォーマット（SKUごとに倉庫対応）</li>
-          <li>スーパーセール申請用コピーページ生成</li>
-          <li>価格調査フォーマット（楽天API連携）</li>
-        </ul>
-        <h4>★ 楽天・Yahoo!販促業務</h4>
-        <ul>
-          <li>サイト更新（特集ページ作成など）</li>
-          <li>メルマガ作成（楽天レスポンシブ対応）</li>
-          <li>バナー設置・撤去・CSV一括登録・SEO対策ほか</li>
-        </ul>
-      </div>
-      <a href="#detail-rakuten">＜詳しく見る＞</a>
-    </div>
+        <!-- ■ 画像加工に関するツール -->
+        <div class="service-carousel">
+            <div class="service-card">
+                <h3>■ 画像加工に関するツール</h3>
+                <div class="horiz-scroll">
+                    <div class="item">
+                        <h4>★ 文字入れ・成型・リネーム加工</h4>
+                        <ul>
+                            <li>ドラッグ＆ドロップで一括加工</li>
+                        </ul>
+                    </div>
+                    <div class="item">
+                        <h4>★ Photoshop／Affinity Photo 自動バッチ</h4>
+                        <ul>
+                            <li>ルーティンバナーをワンクリックで更新</li>
+                        </ul>
+                    </div>
+                    <div class="item">
+                        <h4>★ 簡易補正・文字入れ・バナー作成</h4>
+                        <ul>
+                            <li>日付変更・ポイント倍率も即対応</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-    <!-- ■画像加工に関するツール -->
-    <div class="service-card">
-      <h3>■ 画像加工に関するツール</h3>
-      <div class="screenshots-section">
-        <h4>★ 画像文字入れ・成型・リネーム加工ツール</h4>
-        <ul>
-          <li>ドラッグ＆ドロップで一括加工</li>
-        </ul>
-        <h4>★ Photoshop／Affinity Photo 自動バッチ</h4>
-        <ul>
-          <li>定期的なバナーや補正を自動化</li>
-        </ul>
-        <h4>★ 簡易補正・文字入れ・バナー作成</h4>
-        <ul>
-          <li>日付変更やポイント倍率変更も即対応</li>
-        </ul>
-      </div>
-      <a href="#detail-image-tools">＜詳しく見る＞</a>
-    </div>
+        <!-- ■ 特集ページ作成ツール -->
+        <div class="service-carousel">
+            <div class="service-card">
+                <h3>■ 特集ページ作成ツール</h3>
+                <div class="horiz-scroll">
+                    <div class="item">
+                        <h4>★ 特集ページHTML自動生成</h4>
+                        <ul>
+                            <li>商品URLを入力するだけで完成</li>
+                            <li>既存CSSとの衝突を回避</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-    <!-- ■特集ページ作成ツール -->
-    <div class="service-card">
-      <h3>■ 特集ページ作成ツール</h3>
-      <div class="screenshots-section">
-        <h4>★ 簡単特集ページHTML生成</h4>
-        <ul>
-          <li>商品URLを入力するだけで特集ページを自動作成</li>
-          <li>既存CSSとの衝突を回避</li>
-        </ul>
-      </div>
-      <a href="#detail-feature-page">＜詳しく見る＞</a>
-    </div>
+        <!-- ■ WEBスクレイピングツール -->
+        <div class="service-carousel">
+            <div class="service-card">
+                <h3>■ WEBスクレイピングツール</h3>
+                <div class="horiz-scroll">
+                    <div class="item">
+                        <h4>★ 自動スクレイピング＆CSV生成</h4>
+                        <ul>
+                            <li>JavaScript＋マクロ＋Power Automate連携</li>
+                            <li>BtoBサイトの半自動登録でミス削減</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
 
-    <!-- ■WEBスクレイピングツール -->
-    <div class="service-card">
-      <h3>■ WEBスクレイピングツール</h3>
-      <div class="screenshots-section">
-        <h4>★ 自動スクレイピング＆CSV生成</h4>
-        <ul>
-          <li>JavaScript＋マクロ＋Power Automate連携</li>
-          <li>BtoBサイト向け登録業務を半自動化</li>
-        </ul>
-      </div>
-      <a href="#detail-scraping">＜詳しく見る＞</a>
-    </div>
+        </div>
+    </section>
 
-  </div>
-</section>
-
-  <!-- 他のセクションはそのまま -->
-
-  <footer>
-    &copy; 2025 kinakomaru
-  </footer>
+    <!-- 省略: 他セクション／footer -->
 
 </body>
+
 </html>
