@@ -131,6 +131,26 @@
   <footer>
     &copy; 2025 kinakomaru
   </footer>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const links = Array.from(document.querySelectorAll('.site-nav a'));
+  const map = new Map(links.map(a => [a.getAttribute('href').replace('#',''), a]));
+  const ids = ['home','profile','services','examples','contact'];
+  const headerH = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--header-h')) || 56;
+
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        links.forEach(a => a.classList.remove('active'));
+        const id = e.target.id;
+        map.get(id)?.classList.add('active');
+      }
+    });
+  }, { rootMargin: `-${headerH + 24}px 0px -60% 0px`, threshold: 0.01 });
+
+  ids.forEach(id => { const el = document.getElementById(id); if (el) obs.observe(el); });
+});
+</script>
 
 </body>
 </html>
