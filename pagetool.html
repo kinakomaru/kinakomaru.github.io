@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <title>特集ページ生成ツール</title>
+    <style>
+        body {
+            font-family: 'Hiragino Kaku Gothic ProN', 'Yu Gothic', sans-serif;
+            padding: 20px;
+            background-color: #ffffff;
+            color: #4B4B4B;
+        }
+
+        textarea,
+        input {
+            width: 100%;
+            font-size: 16px;
+            margin-bottom: 10px;
+            padding: 8px;
+        }
+
+        #inputUrls {
+            height: 150px;
+        }
+
+        #output {
+            border: 1px solid #ccc;
+            padding: 10px;
+            white-space: pre-wrap;
+            background: #fff;
+        }
+
+        .fp-preview {
+            border: 1px solid #aaa;
+            padding: 10px;
+            margin-top: 20px;
+            background-color: #fff;
+        }
+
+        .fp-product {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-bottom: 30px;
+            border: 1px solid #D9D1C7;
+            padding: 10px;
+            background-color: #fff;
+        }
+
+        .fp-product img {
+            width: 100%;
+            max-width: 240px;
+            height: auto;
+        }
+
+        .fp-info {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .fp-highlight {
+            background: #F2EDE4;
+            border: 2px solid #D9B4BB;
+        }
+
+        .fp-simple-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .fp-simple-table td {
+            width: 33%;
+            vertical-align: top;
+            padding: 10px;
+            text-align: center;
+        }
+
+        .fp-simple-table img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto 10px;
+        }
+
+        #recommend-block {
+            margin-top: 40px;
+            border: 1px solid #ccc;
+            background: #fff;
+            padding: 20px;
+        }
+
+        h1 {
+            font-size: 24px;
+            color: #8C7B77;
+        }
+
+        h2 {
+            font-size: 20px;
+            color: #8C7B77;
+            margin-top: 40px;
+        }
+
+        #loading {
+            color: #A6808E;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        #copyBtn {
+            padding: 10px 20px;
+            background-color: #A6808E;
+            color: white;
+            border: none;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <h1>特集ページ生成ツール</h1>
+    <p>タイトルを入力してください</p>
+    <input type="text" id="clientName" placeholder="〇〇様へ商品のご案内／日本のお土産特集 など">
+    <p>商品ページのURLを改行で複数入力してください（例：<code>https://jiyugaoka-market-p.com/product.php?id=19693</code>）</p>
+    <textarea id="inputUrls" placeholder="商品ページのURLを複数件入力"></textarea>
+    <button onclick="generateHTML()">生成</button>
+    <div id="loading" style="display: none;">生成中です…お待ちください。</div>
+
+    <h2>生成されたHTML</h2>
+    <div id="output"></div>
+    <button id="copyBtn" onclick="copyToClipboard()">生成HTMLをコピー</button>
+
+    <h2>プレビュー</h2>
+    <div class="fp-preview" id="preview"></div>
+
+
+    <script>
+        function copyToClipboard() {
+            const clientName = document.getElementById('clientName').value.trim() || '';
+            const bodyContent = document.getElementById('output').textContent;
+            const style = document.querySelector('style').outerHTML;
+            const fullHTML = `<!DOCTYPE html>\n<html lang="ja">\n<head>\n<meta charset="UTF-8">\n<title>${clientName}</title>\n${style}\n</head>\n<body>\n${bodyContent}\n</body>\n</html>`;
+            navigator.clipboard.writeText(fullHTML).then(() => {
+                alert("HTML全文をコピーしました！");
+            });
+        }
+
+        function generateProductHTML(product, index) {
+            if (index < 3) {
+                return `
+<div class="fp-product fp-highlight">
+  <div style="flex: 0 0 240px;">
+    <img src="${product.img}" alt="${product.title}">
+  </div>
+  <div class="fp-info">
+    <h2 style="font-size: 20px; color: #8C7B77;">${product.title}</h2>
+    <p style="font-size: 14px; color: #4B4B4B;">${product.description}</p>
+    <div style="display: flex; align-items: center; margin-top: 10px;">
+      <p style="font-size: 16px; color: #A6808E; font-weight: bold; margin: 0;">${product.price}～</p>
+      <a href="${product.url}" target="_blank" style="margin-left: 20px; padding: 8px 20px; background: #A6808E; color: #fff; text-decoration: none; display: inline-block;">商品ページはこちら</a>
+    </div>
+  </div>
+</div>`;
+            } else {
+                return `
+<td>
+  <img src="${product.img}" alt="${product.title}">
+  <span style="font-size: 14px; color: #8C7B77;">${product.title}</span><br>
+  <span style="font-size: 13px; color: #A6808E;">${product.price}～</span>
+</td>`;
+            }
+        }
+
+        async function fetchProduct(url, index) {
+            for (let attempt = 0; attempt < 2; attempt++) {
+                try {
+                    const proxyUrl = 'https://api.allorigins.win/get?url=' + encodeURIComponent(url);
+                    const res = await fetch(proxyUrl);
+                    const data = await res.json();
+                    const html = data.contents;
+                    const doc = new DOMParser().parseFromString(html, 'text/html');
+
+                    const title = doc.querySelector('h1.__title')?.textContent.trim() || '';
+                    const desc = doc.querySelector('div.__description')?.innerHTML.trim() || '';
+                    const img = doc.querySelector('div.__main img')?.getAttribute('src') || '';
+                    const price = doc.querySelector('dl.__custom--3 dd')?.textContent.trim() || '';
+
+                    return generateProductHTML({
+                        title,
+                        description: desc,
+                        img,
+                        price,
+                        url
+                    }, index);
+                } catch (e) {
+                    if (attempt === 1) {
+                        return `<!-- ${url} の情報取得に失敗しました -->`;
+                    }
+                }
+            }
+        }
+
+        async function generateHTML() {
+            document.getElementById('loading').style.display = 'block';
+
+            const urls = document.getElementById('inputUrls').value.trim().split(/\n+/);
+            if (!urls.length || (urls.length === 1 && urls[0] === '')) {
+                alert("URLを入力してください");
+                document.getElementById('loading').style.display = 'none';
+                return;
+            }
+
+            const blocks = [];
+            for (let i = 0; i < urls.length; i++) {
+                const html = await fetchProduct(urls[i], i);
+                blocks.push(html);
+                await new Promise(resolve => setTimeout(resolve, 300));
+            }
+
+            const top3 = blocks.slice(0, 3).join('\n\n');
+            let rest = '';
+            if (blocks.length > 3) {
+                const subItems = blocks.slice(3);
+                const rows = [];
+                for (let i = 0; i < subItems.length; i += 3) {
+                    rows.push(`<tr>${subItems.slice(i, i + 3).join('\n')}</tr>`);
+                }
+                rest = `<table class="fp-simple-table">\n${rows.join('\n')}\n</table>`;
+            }
+
+            const clientName = document.getElementById('clientName').value.trim() || '';
+            const headerHTML = `
+<div style="padding: 20px; background-color: #fff8f5; border: 1px solid #D9B4BB; margin-bottom: 30px;">
+  <h2 style="color: #8C7B77; font-size: 22px; margin-bottom: 10px;">${clientName}</h2>
+  <p style="color: #A6808E; font-size: 15px;">
+   　ここに簡単な説明文を入力してください。
+  </p>
+</div>`;
+
+            const allHTML = headerHTML + '\n\n' + top3 + '\n\n' + rest;
+            document.getElementById('output').textContent = allHTML;
+            document.getElementById('preview').innerHTML = allHTML;
+            document.getElementById('loading').style.display = 'none';
+        }
+
+    </script>
+
+</body>
+
+</html>
