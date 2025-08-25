@@ -1,88 +1,284 @@
-:root{
-  --header-h: 56px;      /* ヘッダーの高さ（必要なら後で調整） */
-  --gap: 16px;
-  --radius: 12px;
+:root {
+    --header-h: 56px;
+    /* ヘッダーの高さ（必要なら後で調整） */
+    --gap: 16px;
+    --radius: 12px;
 }
 
-*{ box-sizing: border-box; }
-html{ scroll-behavior: smooth; }
-body{
-  margin: 0;
-  font-family: -apple-system, "Segoe UI", "Hiragino Kaku Gothic ProN", "Yu Gothic", Meiryo, sans-serif;
-  line-height: 1.7;
-  color: #333;
-  background: #fff;
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    font-family: -apple-system, "Segoe UI", "Hiragino Kaku Gothic ProN", "Yu Gothic", Meiryo, sans-serif;
+    line-height: 1.7;
+    color: #333;
+    background: #fff;
 }
 
 /* 固定ヘッダー＋ナビ */
-.site-header{
-  position: sticky; top: 0; z-index: 50;
-  height: var(--header-h);
-  background: #fff;
-  border-bottom: 1px solid #eee;
-  display: flex; align-items: center;
+.site-header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    height: var(--header-h);
+    background: #fff;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    align-items: center;
 }
-.site-nav{
-  width: 100%;
-  max-width: 900px;
-  margin: 0 auto;
-  padding: 0 12px;
-  display: flex; gap: 6px; flex-wrap: wrap;
+
+.site-nav {
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 12px;
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
 }
-.site-nav a{
-  display: inline-block;
-  padding: 6px 10px;
-  border-radius: 9999px;
-  text-decoration: none;
-  color: #333;
+
+.site-nav a {
+    display: inline-block;
+    padding: 6px 10px;
+    border-radius: 9999px;
+    text-decoration: none;
+    color: #333;
 }
+
 .site-nav a:hover,
 .site-nav a:focus-visible,
-.site-nav a.active{ background: #f2f3f5; }
+.site-nav a.active {
+    background: #f2f3f5;
+}
 
 /* コンテナ＆セクション */
-.container{
-  max-width: 900px;
-  margin: 0 auto;
-  padding: 0 12px;
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 12px;
 }
-section{ padding: 40px 0; }
+
+section {
+    padding: 40px 0;
+}
 
 /* アンカー時のヘッダー被り対策 */
 section#home,
 section#profile,
 section#services,
 section#examples,
-section#contact{
-  scroll-margin-top: calc(var(--header-h) + 12px);
+section#contact {
+    scroll-margin-top: calc(var(--header-h) + 12px);
 }
 
 /* タイポ */
-h1{ font-size: 28px; margin: 16px 0 8px; }
-h2{ font-size: 22px; margin: 24px 0 12px; }
-h3{ font-size: 18px; margin: 20px 0 8px; }
-h4{ font-size: 16px; margin: 16px 0 6px; }
-p, li{ font-size: 15px; }
-
-/* （ベース用）横スクロールカルーセルの土台 */
-.horiz-scroll{
-  display: flex; gap: 12px;
-  overflow-x: auto; overflow-y: hidden;
-  -webkit-overflow-scrolling: touch;
-  scroll-snap-type: x mandatory;
-  padding-bottom: 8px;
-}
-.horiz-scroll > *{
-  flex: 0 0 auto;
-  scroll-snap-align: start;
+h1 {
+    font-size: 28px;
+    margin: 16px 0 8px;
 }
 
-/* 各アイテムの最低限の見た目（既存 .service-card を想定） */
-.service-card{
-  min-width: 260px;
-  background: #fff;
-  border: 1px solid #eee;
-  border-radius: var(--radius);
-  padding: 14px;
-  box-shadow: 0 1px 3px rgba(0,0,0,.04);
+h2 {
+    font-size: 22px;
+    margin: 24px 0 12px;
+}
+
+h3 {
+    font-size: 18px;
+    margin: 20px 0 8px;
+}
+
+h4 {
+    font-size: 16px;
+    margin: 16px 0 6px;
+}
+
+p,
+li {
+    font-size: 15px;
+}
+
+/* サービス内カルーセルの仕上げ */
+#services .horiz-scroll {
+    display: flex;
+    gap: 16px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 0 8px 12px;
+    margin-bottom: 80px;
+    scroll-snap-type: x mandatory;
+    scroll-padding-left: 8px;
+    -webkit-overflow-scrolling: touch;
+}
+
+#services .horiz-scroll::-webkit-scrollbar {
+    height: 8px;
+}
+
+#services .horiz-scroll::-webkit-scrollbar-thumb {
+    background: #ddd;
+    border-radius: 9999px;
+}
+
+/* カード */
+#services .horiz-scroll > .item {
+    flex: 0 0 280px;
+    /* カード幅（SP） */
+    scroll-snap-align: start;
+    background: #fff;
+    border: 1px solid #eee;
+    border-radius: 12px;
+    padding: 14px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, .05);
+}
+
+@media (min-width:768px) {
+    #services .horiz-scroll > .item {
+        flex-basis: 320px;
+    }
+
+    /* PC時の幅 */
+}
+
+#services .item h4 {
+    margin: 0 0 8px;
+    font-size: 16px;
+}
+
+#services .item ul {
+    margin: 0;
+    padding-left: 1.2em;
+}
+
+#services .item li {
+    margin: 4px 0;
+    font-size: 14px;
+}
+
+/* JSで巻くラッパ＋ナビボタン */
+.caro {
+    position: relative;
+}
+
+.caro .caro-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 36px;
+    height: 36px;
+    display: grid;
+    place-items: center;
+    border: 1px solid #ddd;
+    border-radius: 9999px;
+    background: #fff;
+    cursor: pointer;
+    opacity: .85;
+    user-select: none;
+}
+
+.caro .caro-btn:hover {
+    opacity: 1;
+}
+
+.caro .caro-prev {
+    left: -6px;
+}
+
+.caro .caro-next {
+    right: -6px;
+}
+
+.caro .caro-btn[disabled] {
+    opacity: .3;
+    pointer-events: none;
+}
+
+/* A.カード内のExcelプレビュー */
+.item .thumb {
+    border: 1px solid #eee;
+    border-radius: 10px;
+    overflow: hidden;
+    background: #fafafa;
+    aspect-ratio: 16 / 10;
+    /* 画像がなくても高さが保てる */
+    display: block;
+}
+
+.item .thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* A.ボタン（軽量） */
+.btn {
+    display: inline-block;
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 9999px;
+    background: #fff;
+    cursor: pointer;
+    text-decoration: none;
+    color: #333;
+}
+
+.btn:hover {
+    background: #f5f5f5;
+}
+
+.btn--ghost {
+    background: transparent;
+}
+
+/* A.モーダル（ネイティブdialog） */
+dialog {
+    border: none;
+    border-radius: 14px;
+    padding: 0;
+    max-width: 680px;
+    width: calc(100% - 24px);
+}
+
+dialog::backdrop {
+    background: rgba(0, 0, 0, .35);
+}
+
+.modal header {
+    padding: 14px 16px;
+    border-bottom: 1px solid #eee;
+    font-weight: 600;
+}
+
+.modal .modal-body {
+    padding: 16px;
+    max-height: 72vh;
+    overflow: auto;
+}
+
+.modal footer {
+    padding: 12px 16px;
+    border-top: 1px solid #eee;
+    display: flex;
+    gap: 8px;
+    justify-content: flex-end;
+}
+
+.modal .meta {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 10px 0;
+}
+
+.modal .meta th,
+.modal .meta td {
+    border: 1px solid #eee;
+    padding: 6px 8px;
+    text-align: left;
+    font-size: 14px;
 }
