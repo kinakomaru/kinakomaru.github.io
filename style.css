@@ -78,6 +78,15 @@ section#contact {
 }
 
 /* タイポ */
+
+.text {
+    position: relative;
+    top: -130px;
+    font-size: 13px;
+    margin-left: 15px;
+}
+
+
 h1 {
     font-size: 28px;
     margin: 16px 0 8px;
@@ -281,4 +290,109 @@ dialog::backdrop {
     padding: 6px 8px;
     text-align: left;
     font-size: 14px;
+}
+
+/* ===== Skills chips：Text-only（HTML変更不要） ===== */
+
+/* 行間だけ少しタイトにして密度UP */
+/* Skills：箇条書きリセット＋横並びレイアウト（修正） */
+.skills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 25px 18px;
+    margin: 35px 0 80px;
+    padding: 0;
+    list-style: none;
+}
+
+.skills li {
+    margin: 0;
+}
+
+/* ← 余計な縦マージンを消す */
+
+
+/* 本体：テキストだけで成立するように横余白を調整 */
+.chip {
+    padding: 10px 16px;
+    /* アイコン分の余白をテキスト側へ */
+    gap: 0;
+    /* 余白リセット */
+    font-size: 14.5px;
+    font-weight: 500;
+    letter-spacing: .01em;
+    border: 1px solid #e6eaf0;
+    border-radius: 9999px;
+    background: linear-gradient(180deg, #fff, #f7f8fa);
+    color: #2f3a44;
+    box-shadow: 0 1px 1px rgba(20, 28, 38, .05), inset 0 1px 0 rgba(255, 255, 255, .8);
+    transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease, background .18s ease;
+}
+
+.chip:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 3px 10px rgba(16, 24, 40, .10), inset 0 1px 0 rgba(255, 255, 255, .85);
+    border-color: #dfe4ea;
+    background: linear-gradient(180deg, #ffffff, #f5f7fa);
+}
+
+.chip:active {
+    transform: translateY(0);
+    box-shadow: 0 1px 2px rgba(16, 24, 40, .08);
+}
+
+/* ←この擬似要素を完全に無効化（モノグラム丸を消す） */
+.chip::before,
+.chip[data-ico]::before {
+    content: none !important;
+    display: none !important;
+}
+
+/* サブ系は薄め（既存のトーンキープ） */
+.chip--ghost {
+    background: linear-gradient(180deg, #fbfcfd, #f7f9fb);
+    border-color: #edeff3;
+    color: #4b5563;
+}
+
+/* モバイル微調整 */
+@media (max-width:520px) {
+    .skills {
+        gap: 10px 8px;
+    }
+
+    .chip {
+        padding: 8px 12px;
+        font-size: 14px;
+    }
+}
+
+/* デモ画面 */
+
+/* 縦長プレビュー（800x1600） */
+.preview--tall {
+    max-width: min(820px, 100%);
+    margin: 12px auto;
+    text-align: center;
+}
+
+.preview--tall img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border: 1px solid #eee;
+    border-radius: 12px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, .06);
+}
+
+.preview--tall figcaption {
+    font-size: 12.5px;
+    color: #666;
+    margin-top: 6px;
+}
+
+/* 画面が低い時はモーダル内でスクロール */
+dialog .modal-body {
+    max-height: 80vh;
+    overflow: auto;
 }
