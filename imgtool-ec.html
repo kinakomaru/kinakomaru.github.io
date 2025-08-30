@@ -1,0 +1,895 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>らいふすたいる画像ツール</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', 'Hiragino Sans', 'Noto Sans JP', sans-serif;
+            background: #f0f6fc;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        /* --- プレビューエリア --- */
+        #preview-area {
+            width: 90%;
+            min-height: 240px;
+            border: 2px dashed #a0c4e4;
+            background: #fff;
+            border-radius: 8px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            padding: 10px;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+
+        #placeholder {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            color: #3178c6;
+            font-size: 16px;
+        }
+
+        #preview-area.dragover {
+            background: #eaf4ff;
+        }
+
+        .preview-item {
+            width: 150px;
+            height: 210px;
+            border: 1px solid #cbdff1;
+            border-radius: 6px;
+            background: #f9fbff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: grab;
+            box-sizing: border-box;
+            position: relative;
+            z-index: 1;
+            /* GPU最適化 */
+            will-change: transform;
+            backface-visibility: hidden;
+        }
+
+        .preview-item:hover {
+            z-index: 1000 !important;
+            /* 高い値を付与 */
+            position: relative;
+            /* z-index を効かせるために必要 */
+        }
+
+
+
+        /* プレビューエリアの画像部分のみ */
+        .preview-item img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-bottom: 1px solid #e0ecf7;
+            transition: transform 0.2s ease;
+            /* ここだけ残す */
+            transform-origin: center center;
+            /* この img だけ拡大 */
+            position: relative;
+            z-index: 1000;
+        }
+
+        .preview-item:hover img {
+            position: relative;
+            /* こちらにも position が必要 */
+            z-index: 1001 !important;
+            /* 親よりさらに高く */
+            transform: scale(1.4);
+            /* 拡大 */
+            top: -30px;
+        }
+
+
+        /* クリック（ドラッグ）時は拡大解除 */
+        .preview-item img:active {
+            transform: none !important;
+            z-index: auto;
+        }
+
+        /* ×ボタン */
+        .preview-item .delete-btn {
+            position: absolute;
+            bottom: 33px;
+            right: 6px;
+            width: 20px;
+            height: 20px;
+            padding: 0;
+            background: rgba(240, 60, 60, 0.9);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            font-size: 14px;
+            line-height: 20px;
+            text-align: center;
+            cursor: pointer;
+            z-index: 20;
+            /* 拡大時にも前面 */
+            transition: background 0.2s ease;
+        }
+
+        .preview-item .delete-btn:hover {
+            background: rgba(200, 40, 40, 0.9);
+        }
+
+        .preview-item.selected {
+            outline: 3px solid #4da6ff;
+        }
+
+        .image-name {
+            font-size: 12px;
+            color: #5a7dab;
+            text-align: center;
+            margin-top: 5px;
+            word-break: break-word;
+        }
+
+        /* --- コントロールパネル（3カラムレイアウト） --- */
+        #controls {
+            width: 90%;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .group {
+            background: #fff;
+            padding: 16px;
+            border: 1px solid #dbe9f7;
+            border-radius: 8px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .group label {
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .group label.sub {
+            font-weight: normal;
+            font-size: 14px;
+        }
+
+        .group input[type=text],
+        .group select,
+        .group input[type=file] {
+            padding: 8px;
+            font-size: 14px;
+            border: 1px solid #b7d5f5;
+            border-radius: 4px;
+            width: 95%;
+        }
+
+        .group button {
+            padding: 10px;
+            font-size: 14px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        /* A: リネーム＋成型 */
+        #group-rename-resize button {
+            background: #eee;
+        }
+
+        #group-rename-resize button:hover {
+            background: #ddd;
+        }
+
+        /* B: 手動文字入れ */
+        #group-manual label {
+            margin-top: 8px;
+        }
+
+        #apply-btn {
+            background: #4da6ff;
+            color: #fff;
+        }
+
+        #apply-btn:hover {
+            background: #007bff;
+        }
+
+        #reset-btn {
+            background: #f0f0f0;
+        }
+
+        #reset-btn:hover {
+            background: #e3e3e3;
+        }
+
+        /* C: TXT＋ダウンロード */
+        #group-txt-dl button {
+            background: #4da6ff;
+            color: #fff;
+        }
+
+        #group-txt-dl button:hover {
+            background: #007bff;
+        }
+
+        #txt-apply:hover {
+            background: #e67621;
+        }
+
+        /* ダウンロードボタン */
+        #dl-all,
+        #dl-zip {
+            background: #97C5B0 !important;
+            color: #fff;
+        }
+
+        #dl-all:hover,
+        #dl-zip:hover {
+            background: #627962 !important;
+        }
+
+        /* Sortableのドラッグ中最適化 */
+        .sortable-ghost {
+            opacity: 0.8 !important;
+            filter: none !important;
+            backface-visibility: hidden;
+            transform: translateZ(0);
+        }
+
+        .sortable-drag {
+            opacity: 0.9 !important;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            cursor: grabbing;
+        }
+
+        /* 以下既存のinstructions等は省略 */
+        .note {
+            font-weight: normal;
+            font-size: 10px;
+            margin-left: 5px;
+        }
+
+    </style>
+
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.0/Sortable.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+</head>
+
+<body>
+
+    <!-- プレビューエリア -->
+    <h3 style="text-align:center; color:#3178c6;">画像加工ツール</h3>
+    <div id="preview-area">
+        <div id="placeholder">プレビューエリア（画像をドラッグ＆ドロップ）</div>
+    </div>
+
+    <!-- コントロールパネル（3カラム） -->
+    <div id="controls">
+
+        <!-- A: リネーム＋成型 -->
+        <div class="group" id="group-rename-resize">
+            <label>ベース名</label>
+            <input type="text" id="base-name" placeholder="例: SU12345">
+            <button id="rename-btn">リネーム</button>
+            <label>サイズ</label>
+            <select id="size-select">
+                <option value="1200">1200×1200</option>
+                <option value="1000">1000×1000</option>
+                <option value="800">800×800</option>
+            </select>
+            <button id="resize-btn">成 型</button>
+            <div id="resize-msg" style="display:none; color:green; margin-top:8px; font-size:14px;">成型しました！</div>
+        </div>
+
+        <!-- B: 手動文字入れ -->
+        <div class="group" id="group-manual">
+            <label for="text-input">個別文字入れ<span class="note">※プレビューエリアの画像をクリックして選択</span></label>
+            <input type="text" id="text-input" placeholder="テキスト">
+            <label for="font-select" class="sub">フォントファミリー</label>
+            <select id="font-select">
+                <option value="'Noto Sans JP',sans-serif">Noto Sans</option>
+                <option value="Meiryo">メイリオ</option>
+            </select>
+            <label for="size-select-txt" class="sub">サイズ</label>
+            <select id="size-select-txt">
+                <option value="16">16px</option>
+                <option value="18">18px</option>
+                <option value="20" selected>20px</option>
+                <option value="22">22px</option>
+                <option value="24">24px</option>
+            </select>
+            <label for="pos-select" class="sub">位置</label>
+            <select id="pos-select">
+                <option value="bottom-right" selected>右下</option>
+                <option value="bottom-left">左下</option>
+                <option value="top-left">左上</option>
+                <option value="top-right">右上</option>
+            </select>
+            <button id="apply-btn">適用</button>
+            <button id="reset-btn">リセット</button>
+        </div>
+
+        <!-- C: TXT一括＋ダウンロード -->
+        <div class="group" id="group-txt-dl">
+            <label for="txt-upload">.txtファイルで自動入力<span class="note">※改行区切り・左から順に文字入れされます</span></label>
+
+            <input type="file" id="txt-upload" accept=".txt">
+
+            <!-- ← ここから追加 -->
+            <label for="txt-size-select" class="sub">サイズ／位置</label>
+            <select id="txt-size-select">
+                <option value="16">16px</option>
+                <option value="18">18px</option>
+                <option value="20" selected>20px</option>
+                <option value="22">22px</option>
+                <option value="24">24px</option>
+            </select>
+
+            <select id="txt-pos-select">
+                <option value="bottom-right" selected>右下</option>
+                <option value="bottom-left">左下</option>
+                <option value="top-left">左上</option>
+                <option value="top-right">右上</option>
+            </select>
+            <!-- ここまで追加 -->
+
+            <button id="txt-apply">自動入力 実行</button>
+            <hr>
+
+            <label>保存する</label>
+            <button id="dl-all">ダウンロード</button>
+            <button id="dl-zip">一括ダウンロード</button>
+            <font size="1">※リネームしたベース名がフォルダ名になります。（例：SU68147.zip）。</font>
+        </div>
+
+
+    </div>
+
+    <!-- ✅ Excel文字入れ機能（CSVからXLSX専用へ変更済み） -->
+    <div id="csv-text-overlay" style="width: 90%; margin-top: 40px; padding: 20px; border: 2px dashed #aaa; background: #f9f9f9; text-align: center;">
+        <h3 style="text-align:center; color:#3178c6;">Excelで一括文字入れ機能</h3>
+        <font size="2">ページ上部にて画像をアップロードしてから使用可能です。【1.リネーム】や【2.成型】は任意です。</font>
+        <!-- フォーマットダウンロードリンク -->
+        <p style="margin-bottom: 10px;">
+            <a href="./一括文字入れ用.xlsx" download style="color: #3178c6; font-weight: bold; font-size:  11px; text-decoration: underline;">Excelフォーマットをダウンロード</a>
+        </p>
+        <p style="margin-bottom: 10px;">
+            <input type="file" id="csv-upload" accept=".xlsx" style="margin-bottom:10px">
+        </p>
+
+        <!-- 文字位置選択 -->
+        <div style="margin-bottom: 10px;">
+            <label for="csv-position-select">テキストの設定</label><br>
+            <select id="csv-position-select">
+                <option value="top-left">左上</option>
+                <option value="top-center">上中央</option>
+                <option value="top-right">右上</option>
+                <option value="middle-left">左中央</option>
+                <option value="middle-right">右中央</option>
+                <option value="bottom-left">左下</option>
+                <option value="bottom-center">下中央</option>
+                <option value="bottom-right" selected>右下</option>
+            </select>
+            <select id="font-size-select" class="select">
+                <option value="14">14px</option>
+                <option value="16">16px</option>
+                <option value="18">18px</option>
+                <option value="20" selected>20px</option>
+                <option value="22">22px</option>
+                <option value="24">24px</option>
+                <option value="26">26px</option>
+                <option value="28">28px</option>
+            </select>
+
+            <button onclick="applyCSVText()">Excel文字入れ実行</button>
+        </div>
+
+        <!-- プレビュー用エリア -->
+        <div id="csv-preview-area" style="display:flex; flex-wrap:wrap; gap:10px; background:#fff; padding:10px; border:1px solid #ccc; border-radius:8px;">
+            <!-- ここに加工済み画像がプレビューされる -->
+        </div>
+        <!-- ✅ 一括保存・フォルダ保存ボタン追加 -->
+        <div style="margin-top: 15px; text-align:center;">
+            <button onclick="downloadCSVAllImages()">ダウンロード</button>
+            <button onclick="downloadCSVAsFolder()">一括ダウンロード</button>
+            <p style="font-size: 12px; color: #555;">※ベース名がフォルダ名になります。（例：SU68147.zip）</p>
+        </div>
+    </div>
+    <!--
+    <footer id="instructions">
+        <div class="instructions-inner">
+            <h3>How to Use</h3>
+
+            <p><strong>らいふすたいる画像ツールは新規画像でも追加画像でも使えます。</strong><br>
+                文字入れ画像だけ、正方形へのリサイズだけ、リネームだけなど<br>
+                目的に応じて自由にご活用ください。</p>
+
+            <ul>
+                <li>🔹 作業は<strong>上から順に進める</strong>と動作が安定します。</li>
+                <li>🔹 <span class="highlight">リネームは任意</span>ですが、<span class="required">文字入れする場合は成型は必須</span>です。</li>
+                <li>🔹 編集後は<strong>「変更を保存」ボタン</strong>を押してからダウンロードしてください。</li>
+            </ul>
+
+            <h4>📌 Tips & Notes</h4>
+            <ul>
+                <li>⚠️ キャッシュを多用しています。不安定な場合はページを更新してやり直すか、<br>サッパリ諦めて別のソフトをお使いください。</li>
+                <li>📏 文字位置は <strong>右下固定</strong> が推奨ですが、画像に応じて調整OK。</li>
+                <li>📷 画質には最適化処理は行っていません。重要な画像は専用ソフト推奨。</li>
+            </ul>
+
+            <h4>📌 こんな時は</h4>
+            <ul>
+                <li>🔹 個別に保存したい<br>プレビューエリアから右クリック保存</li>
+                <li>🔹 リネームだけしたい<br>画像をアップロード→リネーム→文字入れしない場合でもなにか一つキャンバスに移動→変更を保存→ダウンロード</li>
+                <li>🔹 リネーム以外やりたい<br>画像をアップロード→成型→文字入れしない場合でもなにか一つキャンバスに移動→変更を保存→ダウンロード</li>
+                <li>🔹 文字入れ画像だけ作りたい<br>画像をアップロード→成型→文字入れ→変更を保存→ダウンロード</li>
+
+            </ul>
+
+        </div>
+        <br><br><br><br>
+        <p>今後実施予定</p>
+        <p>🔹 プレビューエリアを上部固定にして、キャンバスエリアで文字入れ作業の際ひと目で確認できるようにする<br>
+            🔹 CSVで画像ファイル名とテキストをアップロードして自動文字入れできるようにする</p>
+
+        <P>バグやご要望ありましたらお気軽に橋浦までお伝えください。</P>
+    </footer>-->
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+            const preview = document.getElementById('preview-area');
+            const placeholder = document.getElementById('placeholder');
+            let selectedDiv = null;
+            const imageCache = new Map();
+            const original = new Map();
+
+            // ドラッグ＆ドロップ
+            preview.addEventListener('dragover', e => {
+                e.preventDefault();
+                preview.classList.add('dragover');
+            });
+            preview.addEventListener('dragleave', e => {
+                e.preventDefault();
+                preview.classList.remove('dragover');
+            });
+            preview.addEventListener('drop', e => {
+                e.preventDefault();
+                preview.classList.remove('dragover');
+                const files = [...e.dataTransfer.files].filter(f => f.type.startsWith('image/'));
+                if (files.length && placeholder) {
+                    placeholder.style.display = 'none'; // テキスト非表示
+                }
+                files.forEach(f => {
+                    const reader = new FileReader();
+                    reader.onload = ev => {
+                        const div = document.createElement('div');
+                        div.className = 'preview-item';
+                        div.innerHTML = `
+                        <button class="delete-btn" title="削除">&times;</button>
+                        <img src="${ev.target.result}">
+                        <div class="image-name">${f.name}</div>
+                        `;
+                        preview.appendChild(div);
+                        original.set(f.name, ev.target.result);
+                        imageCache.set(f.name, ev.target.result);
+                    };
+                    reader.readAsDataURL(f);
+                });
+            });
+
+            // Sortable 作成時に onEnd をフックして renameFiles() を呼ぶ
+            Sortable.create(preview, {
+                animation: 100, // アニメーション速度を速めに
+                easing: 'cubic-bezier(0.25, 0, 0.5, 1)', // イージングを滑らかに
+                ghostClass: 'sortable-ghost', // ドラッグ中の“おいて行かれる”要素
+                dragClass: 'sortable-drag', // ドラッグ中の要素本体
+                fallbackOnBody: true, // レイアウト崩れ防止
+                swapThreshold: 0.65, // 入れ替え判断のしきい値を少し高めに
+                onEnd: () => {
+                    // 並び替えが完了したら自動でリネーム
+                    document.getElementById('rename-btn').click();
+                }
+            });
+
+
+            // キャプチャ段階で delete-btn を拾う
+            preview.addEventListener('click', function(e) {
+                const btn = e.target.closest('.delete-btn');
+                if (!btn) return; // ボタンじゃなければ何もしない
+                e.stopPropagation(); // 他の click ハンドラを阻止
+
+                const item = btn.closest('.preview-item');
+                if (!item) return;
+
+                // キャッシュからも削除（必要なら）
+                const name = item.querySelector('.image-name').textContent;
+                imageCache.delete(name);
+                original.delete(name);
+
+                // DOM から取り除く
+                item.remove();
+            }, true); // ← キャプチャフェーズで先に実行
+
+
+
+            // 共通：off-screen canvas で文字入れ
+            function overlayTextOnImg(imgEl, text, font, size, pos) {
+                const tmp = new Image();
+                tmp.src = imgEl.src;
+                tmp.onload = () => {
+                    const c = document.createElement('canvas'),
+                        ctx = c.getContext('2d');
+                    c.width = tmp.width;
+                    c.height = tmp.height;
+                    ctx.drawImage(tmp, 0, 0);
+                    ctx.font = `${size}px ${font}`;
+                    ctx.fillStyle = 'black';
+                    let x = 10,
+                        y = 10 + size;
+                    ctx.textAlign = 'left';
+                    if (pos === 'bottom-right') {
+                        x = c.width - 10;
+                        y = c.height - 10;
+                        ctx.textAlign = 'right';
+                    }
+                    if (pos === 'bottom-left') {
+                        x = 10;
+                        y = c.height - 10;
+                        ctx.textAlign = 'left';
+                    }
+                    if (pos === 'top-left') {
+                        x = 10;
+                        y = 10 + size;
+                        ctx.textAlign = 'left';
+                    }
+                    if (pos === 'top-right') {
+                        x = c.width - 10;
+                        y = 10 + size;
+                        ctx.textAlign = 'right';
+                    }
+                    ctx.fillText(text, x, y);
+                    imgEl.src = c.toDataURL('image/jpeg');
+                };
+            }
+
+
+            // クリックで選択
+            preview.addEventListener('click', e => {
+                const d = e.target.closest('.preview-item');
+                if (!d) return;
+                if (selectedDiv) selectedDiv.classList.remove('selected');
+                d.classList.add('selected');
+                selectedDiv = d;
+            });
+
+            // リネーム＋成型
+            document.getElementById('rename-btn').onclick = () => {
+                const base = document.getElementById('base-name').value.trim();
+                preview.querySelectorAll('.preview-item').forEach((div, i) => {
+                    const nm = `${base}_${i+1}.jpg`;
+                    const old = div.querySelector('.image-name').textContent;
+                    div.querySelector('.image-name').textContent = nm;
+                    const data = imageCache.get(old) || original.get(old);
+                    imageCache.delete(old);
+                    original.delete(old);
+                    imageCache.set(nm, data);
+                    original.set(nm, data);
+                });
+            };
+            document.getElementById('resize-btn').onclick = () => {
+                const sz = +document.getElementById('size-select').value;
+                const items = preview.querySelectorAll('.preview-item');
+                let done = 0;
+
+                items.forEach(div => {
+                    const img = div.querySelector('img'),
+                        tmp = new Image(),
+                        c = document.createElement('canvas'),
+                        ctx = c.getContext('2d');
+                    tmp.src = img.src;
+                    tmp.onload = () => {
+                        // Canvas のサイズを正方形にセット
+                        c.width = c.height = sz;
+                        // 背景を白で塗りつぶし
+                        ctx.fillStyle = '#fff';
+                        ctx.fillRect(0, 0, sz, sz);
+                        // 画像を中央に収める
+                        const scale = Math.min(sz / tmp.width, sz / tmp.height);
+                        const w = tmp.width * scale,
+                            h = tmp.height * scale;
+                        ctx.drawImage(tmp,
+                            (sz - w) / 2,
+                            (sz - h) / 2,
+                            w, h
+                        );
+                        // 結果を <img> に反映
+                        img.src = c.toDataURL('image/jpeg');
+
+                        // キャッシュ更新
+                        const name = div.querySelector('.image-name').textContent;
+                        imageCache.set(name, img.src);
+                        original.set(name, img.src);
+
+                        // 全部終わったらメッセージ表示
+                        done++;
+                        if (done === items.length) {
+                            const msg = document.getElementById('resize-msg');
+                            msg.style.display = 'block';
+                            msg.style.opacity = '1';
+                            // 1.5秒後にフェードアウト
+                            setTimeout(() => {
+                                msg.style.transition = 'opacity 0.3s';
+                                msg.style.opacity = '0';
+                                setTimeout(() => {
+                                    msg.style.display = 'none';
+                                }, 300);
+                            }, 1500);
+                        }
+                    };
+                });
+            };
+
+
+
+            // 手動文字入れ＋リセット
+            document.getElementById('apply-btn').onclick = () => {
+                if (!selectedDiv) return alert('先に画像をクリックしてください');
+                const t = document.getElementById('text-input').value.trim(),
+                    f = document.getElementById('font-select').value,
+                    s = +document.getElementById('size-select-txt').value,
+                    p = document.getElementById('pos-select').value;
+                overlayTextOnImg(selectedDiv.querySelector('img'), t, f, s, p);
+            };
+            document.getElementById('reset-btn').onclick = () => {
+                if (!selectedDiv) return;
+                const nm = selectedDiv.querySelector('.image-name').textContent,
+                    d = original.get(nm);
+                if (d) selectedDiv.querySelector('img').src = d;
+            };
+
+            // 「TXT文字入れ実行」ボタンの処理を次のように書き換えます
+            document.getElementById('txt-apply').onclick = () => {
+                const file = document.getElementById('txt-upload').files[0];
+                if (!file) {
+                    alert('.txtを選択してください');
+                    return;
+                }
+
+                // 追加したセレクトからサイズ・位置を取得
+                const size = parseInt(document.getElementById('txt-size-select').value, 10);
+                const pos = document.getElementById('txt-pos-select').value;
+
+                const reader = new FileReader();
+                reader.onload = () => {
+                    // 改行ごとに文字を抽出
+                    const lines = reader.result.split(/\r?\n/).filter(l => l.trim());
+                    const items = Array.from(preview.querySelectorAll('.preview-item'));
+
+                    items.forEach((div, i) => {
+                        const imgEl = div.querySelector('img');
+                        // overlayTextOnImg(imgEl, テキスト, フォント, サイズ, 位置)
+                        overlayTextOnImg(imgEl, lines[i] || '', 'Noto Sans JP', size, pos);
+                    });
+                };
+                reader.readAsText(file);
+            };
+
+
+            // ダウンロード
+            document.getElementById('dl-all').onclick = () => {
+                preview.querySelectorAll('.preview-item img').forEach(img => {
+                    const a = document.createElement('a');
+                    a.href = img.src;
+                    a.download = img.parentNode.querySelector('.image-name').textContent;
+                    document.body.appendChild(a);
+                    a.click();
+                    a.remove();
+                });
+            };
+            document.getElementById('dl-zip').onclick = () => {
+                const zip = new JSZip();
+                const items = [...preview.querySelectorAll('.preview-item')];
+
+                // ZIP 名のベースを取得
+                let base = 'images';
+                if (items.length) {
+                    const fn = items[0].querySelector('.image-name').textContent;
+                    if (fn.includes('_')) base = fn.split('_')[0];
+                }
+
+                // フォルダを作らず、zip のルート直下にファイルを追加
+                const promises = items.map(div => {
+                    const img = div.querySelector('img');
+                    const nm = div.querySelector('.image-name').textContent;
+                    return fetch(img.src)
+                        .then(r => r.blob())
+                        .then(blob => zip.file(nm, blob)); // ← ここで zip.file() を使う
+                });
+
+                Promise.all(promises)
+                    .then(() => zip.generateAsync({
+                        type: 'blob'
+                    }))
+                    .then(content => saveAs(content, `${base}.zip`));
+            };
+
+
+        });
+
+    </script>
+
+
+    <!--xlsxで一括文字入れ -->
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+
+    <script>
+        let csvDataMap = new Map();
+        document.getElementById('csv-upload').addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const data = new Uint8Array(e.target.result);
+                const workbook = XLSX.read(data, {
+                    type: 'array'
+                });
+                const firstSheet = workbook.Sheets[workbook.SheetNames[0]];
+                const rows = XLSX.utils.sheet_to_json(firstSheet, {
+                    header: 1
+                });
+
+                csvDataMap.clear();
+                rows.forEach(row => {
+                    const [filename, text] = row;
+                    if (filename && text) {
+                        csvDataMap.set(filename.trim(), text.trim());
+                    }
+                });
+                alert('Excelファイルを読み込みました。');
+            };
+            reader.readAsArrayBuffer(file);
+        });
+
+        function applyCSVText() {
+            const position = document.getElementById('csv-position-select').value;
+            const preview = document.getElementById('csv-preview-area');
+            preview.innerHTML = '';
+
+            csvDataMap.forEach((text, filename) => {
+                const item = [...document.querySelectorAll('.preview-item')].find(div => div.querySelector('.image-name').textContent === filename);
+                if (!item) return;
+                const img = item.querySelector('img');
+                const imgObj = new Image();
+                imgObj.src = img.src;
+                imgObj.onload = function() {
+                    const canvas = document.createElement('canvas');
+                    const ctx = canvas.getContext('2d');
+                    canvas.width = imgObj.width;
+                    canvas.height = imgObj.height;
+                    ctx.drawImage(imgObj, 0, 0);
+
+                    ctx.font = '18px "Noto Sans JP", sans-serif';
+                    ctx.fillStyle = 'black';
+                    let x, y;
+                    switch (position) {
+                        case 'top-left':
+                            x = 10;
+                            y = 28;
+                            ctx.textAlign = 'left';
+                            break;
+                        case 'top-center':
+                            x = canvas.width / 2;
+                            y = 28;
+                            ctx.textAlign = 'center';
+                            break;
+                        case 'top-right':
+                            x = canvas.width - 10;
+                            y = 28;
+                            ctx.textAlign = 'right';
+                            break;
+                        case 'middle-left':
+                            x = 10;
+                            y = canvas.height / 2;
+                            ctx.textAlign = 'left';
+                            break;
+                        case 'middle-right':
+                            x = canvas.width - 10;
+                            y = canvas.height / 2;
+                            ctx.textAlign = 'right';
+                            break;
+                        case 'bottom-left':
+                            x = 10;
+                            y = canvas.height - 10;
+                            ctx.textAlign = 'left';
+                            break;
+                        case 'bottom-center':
+                            x = canvas.width / 2;
+                            y = canvas.height - 10;
+                            ctx.textAlign = 'center';
+                            break;
+                        case 'bottom-right':
+                        default:
+                            x = canvas.width - 10;
+                            y = canvas.height - 10;
+                            ctx.textAlign = 'right';
+                            break;
+                    }
+
+                    ctx.fillText(text, x, y);
+
+                    const resultImg = document.createElement('img');
+                    resultImg.src = canvas.toDataURL('image/jpeg');
+                    resultImg.style.width = '150px';
+                    resultImg.style.border = '1px solid #ccc';
+                    resultImg.title = filename + ' に適用';
+                    resultImg.dataset.filename = filename; // 後で保存用に使う
+                    preview.appendChild(resultImg);
+                };
+            });
+        }
+
+        function downloadCSVAllImages() {
+            const imgs = document.querySelectorAll('#csv-preview-area img');
+            imgs.forEach(img => {
+                const link = document.createElement('a');
+                link.href = img.src;
+                link.download = img.dataset.filename || 'image.jpg';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            });
+        }
+
+        function downloadCSVAsFolder() {
+            const imgs = document.querySelectorAll('#csv-preview-area img');
+            if (imgs.length === 0) return alert('保存する画像がありません');
+
+            const zip = new JSZip();
+            let baseName = 'images';
+            const firstName = imgs[0].dataset.filename;
+            if (firstName && firstName.includes('_')) {
+                baseName = firstName.split('_')[0];
+            }
+
+            const folder = zip.folder(baseName);
+            let promises = [];
+            imgs.forEach(img => {
+                const filename = img.dataset.filename || 'image.jpg';
+                const promise = fetch(img.src).then(res => res.blob()).then(blob => {
+                    folder.file(filename, blob);
+                });
+                promises.push(promise);
+            });
+            Promise.all(promises).then(() => {
+                zip.generateAsync({
+                    type: 'blob'
+                }).then(content => {
+                    saveAs(content, `${baseName}.zip`);
+                });
+            });
+        }
+
+    </script>
+</body>
+
+</html>
