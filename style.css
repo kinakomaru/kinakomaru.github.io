@@ -396,3 +396,97 @@ dialog .modal-body {
     max-height: 80vh;
     overflow: auto;
 }
+
+
+/* ===== [Fix] ヘッダー/ナビ：スマホで崩れない横スクロール1行 ===== */
+@media (max-width: 768px) {
+    :root {
+        --header-h: 48px;
+    }
+
+    /* 固定ヘッダーの高さを小さめに */
+    .site-header {
+        height: var(--header-h);
+    }
+
+    .site-nav {
+        gap: 8px;
+        padding: 8px 10px;
+        flex-wrap: nowrap;
+        /* 折り返さない */
+        overflow-x: auto;
+        /* 1行で横スクロール */
+        white-space: nowrap;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+        /* 端のフェード（見た目だけ。不要なら消してOK） */
+        -webkit-mask-image: linear-gradient(to right, transparent 0, #000 24px, #000 calc(100% - 24px), transparent 100%);
+        mask-image: linear-gradient(to right, transparent 0, #000 24px, #000 calc(100% - 24px), transparent 100%);
+    }
+
+    .site-nav::-webkit-scrollbar {
+        display: none;
+    }
+
+    .site-nav a {
+        flex: 0 0 auto;
+        padding: 7px 10px;
+        font-size: 14px;
+    }
+}
+
+/* アンカー位置のズレ保護（固定ヘッダー分の余白を自動適用） */
+html {
+    scroll-padding-top: calc(var(--header-h) + 12px);
+}
+
+section[id] {
+    scroll-margin-top: calc(var(--header-h) + 12px);
+}
+
+/* ===== [Fix] skills：レスポンシブな行間・横間隔に ===== */
+.skills {
+    gap: 22px 14px;
+}
+
+/* デスクトップ：やや広め */
+@media (max-width: 720px) {
+    .skills {
+        gap: 16px 12px;
+    }
+}
+
+@media (max-width: 520px) {
+    .skills {
+        gap: 15px 10px;
+    }
+
+    .chip {
+        padding: 8px 12px;
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 360px) {
+    .skills {
+        gap: 10px 8px;
+    }
+
+    .chip {
+        padding: 7px 10px;
+        font-size: 13.5px;
+    }
+}
+
+/* ===== [Tweak] モーダル本文の高さ（重複定義の統一・上書き） ===== */
+.modal .modal-body {
+    max-height: 80vh;
+    overflow: auto;
+}
+
+/* アクセシビリティ：キーボードフォーカス可視化（任意） */
+.site-nav a:focus-visible {
+    outline: 2px solid #6366f1;
+    outline-offset: 2px;
+    border-radius: 8px;
+}
