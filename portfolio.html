@@ -13,29 +13,43 @@
     <header class="site-header">
         <nav class="site-nav">
             <a href="#home">ホーム</a>
-            <a href="#profile">プロフィール</a>
             <a href="#rakuten">楽天市場</a>
             <a href="#img">画像作成・加工</a>
             <a href="#lp">特集ページ・LPページ</a>
-            <a href="#sc">webスクレイピング・効率化</a>
+            <a href="#sc">webスクレイピング・業務効率化</a>
+            <a href="#examples">補足情報</a>
         </nav>
     </header>
 
     <main class="container">
         <section id="home">
             <h1>H.K. ポートフォリオ</h1>
-            <p>楽天市場・Yahoo!ショッピング・業販サイト中心にEC業務全般のPRサイト／AI使用</p>
-        </section>
+            <h4>楽天市場・Yahoo!ショッピング・業販サイト中心にEC業務全般のPRサイト／AI使用</h4>
+            <ul class="skills" aria-label="スキルセット">
+                <li><span class="chip" data-ico="CSV">CSV</span></li>
+                <li><span class="chip" data-ico="RPA">RPA</span></li>
+                <li><span class="chip" data-ico="API">API</span></li>
+                <li><span class="chip" data-ico="VBA">VBA/関数/マクロ</span></li>
+                <li><span class="chip" data-ico="CHR">Chrome拡張機能</span></li>
+                <li><span class="chip" data-ico="JS">JavaScript</span></li>
+                <li><span class="chip" data-ico="HTML">HTML</span></li>
+                <li><span class="chip" data-ico="SCR">スクレイピング</span></li>
+                <li><span class="chip" data-ico="PA">Power Automate</span></li>
+                <li><span class="chip chip--ghost" data-ico="IMG">画像加工・リネーム・成型</span></li>
+                <li><span class="chip chip--ghost" data-ico="SEO">SEO対策</span></li>
+                <li><span class="chip chip--ghost" data-ico="UPD">サイト更新</span></li>
+            </ul>
 
-        <!-- 2. プロフィール -->
-        <section id="profile">
-            <h2>PROFILE</h2>
+
+            <!-- 2. プロフィール -->
+            <h2>ABOUT ME</h2>
             <p>
+                36歳/女性/受験生1匹/保護猫4匹<br>
                 10年以上にわたり、楽天市場・Yahoo!ショッピング・Amazonなど主要ECモールの運営に携わってきました。<br>
                 また、B-cartやスーパーデリバリーなどの業販サイトの商品登録にも従事。<br>
                 楽天市場の店長として3年半勤め、月商2000万を達成。その後、育児両立のため退職しフリーランスへ。<br>
-                売上が立てば立てたで他の課題が出てくるので、「この段ボール箱を開ける人が必ずいる」「このページを見る人が必ずいる」という理念を忘れずに、ページ上での適切な情報の配置や言い回し、現場の方とのコミュニケーションを大切にしています。<br><br>
-                現在はフリーランス時代の受注先の会社より直接雇用を受け、平日フルタイム勤務しています。<br>
+                「この段ボール箱を開ける人が必ずいる」「このページを見る人が必ずいる」という理念を忘れずに、ページ上での適切な情報の配置や言い回し、現場の方とのコミュニケーションを大切にしています。思いやりなくして効率化は不可能です<br><br>
+                現在はフリーランス時代の受注先の会社様より直接雇用を受け、平日フルタイム勤務しています。<br>
                 土日祝にできる業務を募集しています。ぜひよろしくお願いいたします。
             </p>
         </section>
@@ -266,11 +280,21 @@
 
                     </div>
                     <div class="item">
+                        <h4>★ 価格調査ツール（Excel）</h4>
+                        <p class="thumb">
+                            <img src="assets/pricesurvey.jpg" alt="市場調査ツール（抜粋プレビュー）">
+                        </p>
+                        <ul>
+                            <li>API連携</li>
+                            <li>→商品名やJANコードから自社価格、最安値、平均値、指定したショップの価格と送料をリスト化</li>
+                            <li>更新用のCSVを生成（アップロードは手動で）</li>
+                        </ul>
+                    </div>
+                    <div class="item">
                         <h4>★ 楽天市場に関するツール（Excel）</h4>
                         <ul>
                             <li>在庫一括更新フォーマット（SKU倉庫対応）</li>
                             <li>スーパーセール申請用コピー生成<br>→画面IDと割引率から申請用のデータを作成、SKU別にも対応（申請しないSKUは倉庫へ）</li>
-                            <li>価格調査フォーマット（API連携）<br>→商品名やJANコードから自社価格、最安値、平均値、指定したショップの価格と送料をリスト化</li>
                         </ul>
                     </div>
                     <div class="item">
@@ -286,7 +310,7 @@
                     </div>
                 </div>
             </section>
-
+            <p class="text">※守秘義務のためプレビュー画像はサンプルです。ルールがあればこのようなフォーマットを作ることができます。</p>
             <!-- 画像加工ツール -->
             <section id="img">
                 <h3>■ 画像作成・加工</h3>
@@ -301,6 +325,7 @@
                         <ul>
                             <li>ドラッグ＆ドロップで一括加工</li>
                             <li>ECモールでの画像作業に特化したツール</li>
+                            <li>自作ツールなのでカスタマイズ可能</li>
                         </ul>
                         <button class="btn" data-dialog="dlg-img-tool">詳しく見る</button>
                         <!-- モーダル本体 -->
@@ -318,7 +343,7 @@
                                         <li>ドラッグドロップでプレビューエリアへ移動</li>
                                         <li>ベース名登録でリネーム（AAAと登録するとAAA_1.jpg～の連番が振り分けられます）</li>
                                         <li>ドラッグドロップで画像並び替え：連番を更新</li>
-                                        <li>任意の正方形サイズへ成型。元画像が長方形の場合余白を自動追加で縦横比維持</li>
+                                        <li>任意の正方形サイズへ成型。元画像が長方形の場合は余白を自動追加で縦横比維持</li>
                                         <li>任意の位置に文字入れ。個別文字入れ、.txtまたはexlelファイルからから一括文字入れに対応</li>
                                     </ul>
 
@@ -326,7 +351,7 @@
                                     <img src="assets/img_tool.jpg" alt="画像加工ツール（拡大プレビュー）" style="width:100%; height:auto; border:1px solid #eee; border-radius:10px;">
 
                                     <!-- でもリンク -->
-                                    <p><a href="https://kinakomaru.github.io/imgtool.HTML" target="_blank" rel="noopener noreferrer">デモ画面はこちらから</a></p>
+                                    <p><a href="kinakomaru.github.io/imgtool-ec.html" target="_blank" rel="noopener noreferrer">デモサイトはこちらから</a></p>
                                 </div>
                                 <footer>
                                     <button class="btn" data-close>閉じる</button>
@@ -349,6 +374,7 @@
                     </div>
                 </div>
             </section>
+
             <!-- 特集ページ作成 -->
             <section id="lp">
                 <h3>■ 特集ページ・LPページ</h3>
@@ -362,6 +388,7 @@
                         <ul>
                             <li>商品URLを入力するだけで完成</li>
                             <li>既存CSSとの衝突を回避</li>
+                            <li>自作ツールなのでカスタマイズ可能</li>
                         </ul>
                         <button class="btn" data-dialog="dlg-page-tool">詳しく見る</button>
 
@@ -379,13 +406,28 @@
                                         <li>商品URLを複数入力して生成ボタンを押すだけでHTML自動作成</li>
                                         <li>最初の３画面は注目アイテムレイアウト、以降はリスト表示に</li>
                                         <li>HTMLの設定を変えればほとんどのサイトに対応できます</li>
+
                                     </ul>
 
                                     <!-- 拡大プレビュー画像 -->
                                     <img src="assets/pagetool2.jpg" alt="ページツール（拡大プレビュー）" style="width:100%; height:auto; border:1px solid #eee; border-radius:10px;">
 
-                                    <!-- でもリンク -->
-                                    <p><a href="https://kinakomaru.github.io/pagetool.HTML" target="_blank" rel="noopener noreferrer">デモ画面はこちらから</a></p>
+                                    <p>
+                                        <a href="#" class="demo-link" data-dialog="dlg-makepage">デモ画面はこちらから</a>
+                                    </p>
+                                    <dialog id="dlg-makepage">
+                                        <article class="modal">
+                                            <header>特集ページHTML自動生成ツール（プレビュー）</header>
+                                            <div class="modal-body">
+                                                <figure class="preview--tall">
+                                                    <img src="assets/makepage1.jpg" alt="特集ページHTML自動生成ツール（サンプル画面）" width="800" height="1600" loading="lazy" decoding="async">
+                                                    <figcaption>情報保護のため画質を下げています</figcaption>
+                                                </figure>
+                                            </div>
+                                            <footer><button class="btn" data-close>閉じる</button></footer>
+                                        </article>
+                                    </dialog>
+
                                 </div>
                                 <footer>
                                     <button class="btn" data-close>閉じる</button>
@@ -423,11 +465,44 @@
                                     </ul>
 
                                     <!-- 拡大プレビュー画像 -->
-                                    <img src="assets/nicepage2.jpg" alt="ページツール（拡大プレビュー）" style="width:100%; height:auto; border:1px solid #eee; border-radius:10px;">
+                                    <img src="assets/nicepage.jpg" alt="ページツール（拡大プレビュー）" style="width:100%; height:auto; border:1px solid #eee; border-radius:10px;">
 
                                     <!-- でもリンク -->
-                                    <p><a href="https://www.rakuten.ne.jp/gold/aromage-store2/ivent/fog-apron.HTML" target="_blank" rel="noopener noreferrer">nicepage使用の特集ページはこちらから【1】</a></p>
-                                    <p><a href="https://www.rakuten.ne.jp/gold/aromage-store2/ivent/character-item.HTML" target="_blank" rel="noopener noreferrer">nicepage使用の特集ページはこちらから【2】</a></p>
+                                    <p>
+                                        <a href="#" class="demo-link" data-dialog="dlg-nicepage1">デモ画面はこちらから</a>
+                                    </p>
+                                    <p>
+                                        <a href="#" class="demo-link" data-dialog="dlg-nicepage2">デモ画面はこちらから</a>
+                                    </p>
+
+                                    <!-- nicepage1 -->
+                                    <dialog id="dlg-nicepage1">
+                                        <article class="modal">
+                                            <header>nicepage使用LP1（プレビュー）</header>
+                                            <div class="modal-body">
+                                                <figure class="preview--tall">
+                                                    <img src="assets/nicepage1.jpg" alt="特集ページHTML自動生成ツール（サンプル画面）" width="800" height="1600" loading="lazy" decoding="async">
+                                                    <figcaption>情報保護のため画質を下げています</figcaption>
+                                                </figure>
+                                            </div>
+                                            <footer><button class="btn" data-close>閉じる</button></footer>
+                                        </article>
+                                    </dialog>
+
+                                    <!-- nicepage1 -->
+                                    <dialog id="dlg-nicepage2">
+                                        <article class="modal">
+                                            <header>nicepage使用LP2（プレビュー）</header>
+                                            <div class="modal-body">
+                                                <figure class="preview--tall">
+                                                    <img src="assets/nicepage2.jpg" alt="特集ページHTML自動生成ツール（サンプル画面）" width="800" height="1600" loading="lazy" decoding="async">
+                                                    <figcaption>情報保護のため画質を下げています</figcaption>
+                                                </figure>
+                                            </div>
+                                            <footer><button class="btn" data-close>閉じる</button></footer>
+                                        </article>
+                                    </dialog>
+
                                 </div>
                                 <footer>
                                     <button class="btn" data-close>閉じる</button>
@@ -466,8 +541,23 @@
                                     <!-- 拡大プレビュー画像 -->
                                     <img src="assets/chatgptpage.jpg" alt="ページツール（拡大プレビュー）" style="width:100%; height:auto; border:1px solid #eee; border-radius:10px;">
 
-                                    <!-- でもリンク -->
-                                    <p><a href="https://shopping.geocities.jp/aromagestore/etica_item.HTML?sc_i=shp_pc_store_c21banner&_t=1755928310134" target="_blank" rel="noopener noreferrer">AIに丸投げした特集ページはこちらから【1】</a></p>
+                                    <p>
+                                        <a href="#" class="demo-link" data-dialog="dlg-gpt">デモ画面はこちらから</a>
+                                    </p>
+
+                                    <!-- nicepage1 -->
+                                    <dialog id="dlg-gpt">
+                                        <article class="modal">
+                                            <header>chatGPT使用ページ（プレビュー）</header>
+                                            <div class="modal-body">
+                                                <figure class="preview--tall">
+                                                    <img src="assets/chatgpt-page1.jpg" alt="chatGPT使用ページ（サンプル画面）" width="800" height="1600" loading="lazy" decoding="async">
+                                                    <figcaption>情報保護のため画質を下げています</figcaption>
+                                                </figure>
+                                            </div>
+                                            <footer><button class="btn" data-close>閉じる</button></footer>
+                                        </article>
+                                    </dialog>
                                 </div>
                                 <footer>
                                     <button class="btn" data-close>閉じる</button>
@@ -480,10 +570,10 @@
 
             <!-- WEBスクレイピング -->
             <section id="sc">
-                <h3>■ 社内向け業務効率化</h3>
+                <h3>■ WEBスクレイピング・事務作業効率化</h3>
                 <div class="horiz-scroll">
                     <div class="item">
-                        <h4>★ WEBスクレイピング＆CSV生成</h4>
+                        <h4>★ WEBスクレイピングで商品登録</h4>
                         <!-- プレビュー（小） -->
                         <a class="thumb" href="#" data-dialog="dlg-auto_page" aria-label="Excelプレビューを開く">
                             <img src="assets/placeholder-preview-1280x800.jpg" alt="Nicepage（抜粋プレビュー）">
@@ -491,6 +581,7 @@
                         <ul>
                             <li>JavaScript＋マクロ＋Power Automate連携</li>
                             <li>半自動商品登録でミス削減</li>
+                            <li>カスタマイズ可能</li>
                         </ul>
                         <button class="btn" data-dialog="dlg-auto_page">詳しく見る</button>
 
@@ -548,7 +639,7 @@
                         <h4>★ Google Apps Script・VBAマクロ</h4>
 
                         <ul>
-                            <li>GASは現状AI任せです（あまり作業経験がないので、ツールバーに別メニュー設置してリストを整形したりとかその程度）</li>
+                            <li>GASは現状AI任せです（あまり作業経験がないので、ツールバーにメニュー設置してリストを整形したり、API操作で画面IDを呼び出したりとかその程度です）</li>
                             <li>Excel使用の「やらなければならないけど面倒なこと」の効率化が得意です</li>
                         </ul>
 
@@ -557,18 +648,36 @@
                     </div>
                 </div>
             </section>
-        </section>
 
-        <!-- 4. 実績・事例 -->
-        <section id="examples">
-            <h2>AIについて</h2>
-            <ul>
-                <li>ほとんどの作業にAI(chatGPT）を使用しています。基本的には自分が保守できる範囲でコーディングしてもらってますが、HTMLに限り（比較的リスクが少ないので）結構自由にデザインしてもらっています。</li>
-                <li>どれも社内用のツールというよりは個人利用の方が向いていると思いますので、ぜひ色々な経験を積ませて頂きたいです。</li>
-            </ul>
-        </section>
+            <!-- 4. AI使用について -->
+            <section id="examples">
+                <h2>AIについて</h2>
+                <ul>
+                    <li>ほとんどの作業にAI(chatGPT）を使用しています。基本的には自分が保守できる範囲でコーディングしてもらってますが、HTMLに限り（比較的リスクが少ないので）結構自由にデザインしちゃってます。</li>
+                    <li>どれも社内用のツールというよりは個人利用の方が向いていると思いますので、ぜひ色々な経験を積ませて頂きたいです。</li>
+                </ul>
+            </section>
 
+            <!-- 置き換え：できないこと・守備範囲外 -->
+            <section id="limits">
+                <h2>できないこと</h2>
+                <ul>
+                    <li><strong>ゼロからのビジュアル・デザイン設計</strong>（ロゴ/CI/世界観づくり等）<br>
+                        ─ 既存ガイドや素材がある前提での<strong>改善・量産・統一</strong>を得意としています。</li>
+                    <li><strong>高度なアプリ/ソフト開発</strong>（ネイティブアプリ、大規模バックエンド、複雑なリアルタイム処理）<br>
+                        ─ 小規模ツールや<strong>業務自動化</strong>（GAS/VBA/RPA）までが担当範囲です。</li>
+                    <li><strong>単独でのフルプロダクト開発</strong><br>
+                        一人で店舗運営をしてきた経験からか、広く浅く実務から技術を習得してきました。
+                </ul>
+
+                <p class="note" style="margin-top:10px;color:#656d76;font-size:14px;">
+                    得意領域は、<strong>「既存データをルールで整える」「運用しやすいフォーマット化」「EC実務に合わせた改善・自動化」</strong>です。
+                </p>
+            </section>
+
+        </section>
         <footer>
+            お読み頂き誠にありがとうございます。<br>
             &copy; 2025 H.K.（諸事情によりサイト上では本名非公開とさせて頂きます）
         </footer>
     </main>
