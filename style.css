@@ -463,7 +463,7 @@ section[id] {
 
     .chip {
         padding: 8px 12px;
-        font-size: 14px;
+        font-size: 12px;
     }
 }
 
@@ -489,4 +489,164 @@ section[id] {
     outline: 2px solid #6366f1;
     outline-offset: 2px;
     border-radius: 8px;
+}
+
+
+/* ===================== Kusumi Pastel Theme (CSS only) ===================== */
+/* 1) テーマ変数：淡いニュアンスカラー */
+:root {
+    --ink: #2a2f35;
+    --bg-1: #faf8f7;
+    /* くすみベージュ寄り */
+    --bg-2: #f7faf9;
+    /* くすみミント寄り  */
+
+    --rose-50: #f6ecef;
+    --rose-200: #e6c9d1;
+    /* くすみピンク */
+    --sage-50: #eef4ef;
+    --sage-200: #c7d8ca;
+    /* くすみセージ */
+    --mist-50: #eef4f9;
+    --mist-200: #c9d9ea;
+    /* くすみブルー */
+    --sand-50: #f8f5ef;
+    --sand-200: #e8dccb;
+    /* くすみサンド */
+    --lav-50: #f3f1f7;
+    --lav-200: #d9cbe8;
+    /* くすみラベンダー */
+}
+
+/* 2) ページ背景と文字色（超うすいグラデ） */
+body {
+    color: var(--ink);
+    background: linear-gradient(180deg, var(--bg-1), var(--bg-2));
+}
+
+/* 3) ヘッダー：軽い透明＆シャドウで浮かせる（スマホも綺麗） */
+.site-header {
+    background: rgba(255, 255, 255, .88);
+    backdrop-filter: saturate(1.1) blur(6px);
+    box-shadow: 0 1px 0 rgba(0, 0, 0, .04);
+}
+
+.site-nav a {
+    border: 1px solid transparent;
+    border-radius: 999px;
+}
+
+.site-nav a.active {
+    background: var(--mist-50);
+    border-color: var(--mist-200);
+}
+
+/* 4) セクション見出しに“くすみ下線”を一筆だけ */
+h2 {
+    position: relative;
+}
+
+h2::after {
+    content: "";
+    display: block;
+    width: 120px;
+    height: 6px;
+    border-radius: 999px;
+    margin-top: 6px;
+    opacity: .35;
+    background: linear-gradient(90deg, var(--rose-200), var(--mist-200));
+}
+
+/* 5) ヒーロー（#home）だけ薄い面取りカードに */
+#home {
+    background: linear-gradient(180deg, rgba(201, 217, 234, .18), rgba(248, 245, 239, .18));
+    border: 1px solid #eee;
+    border-radius: 16px;
+    padding: 18px 16px;
+    margin-top: 12px;
+}
+
+/* 6) サービスカード：ホバーでさりげなく色気 */
+#services .horiz-scroll > .item {
+    transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+}
+
+#services .horiz-scroll > .item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(20, 24, 40, .08);
+    border-color: var(--sand-200);
+}
+
+/* セクションごとに微妙に色を変える（好みで調整可） */
+#rakuten .horiz-scroll > .item:hover {
+    border-color: var(--rose-200);
+}
+
+#img .horiz-scroll > .item:hover {
+    border-color: var(--lav-200);
+}
+
+#lp .horiz-scroll > .item:hover {
+    border-color: var(--mist-200);
+}
+
+#sc .horiz-scroll > .item:hover {
+    border-color: var(--sage-200);
+}
+
+/* 7) ボタン：白ベースに淡い質感 */
+.btn {
+    background: linear-gradient(180deg, #fff, #fafafa);
+    border-color: #e5e7eb;
+    box-shadow: 0 1px 0 rgba(255, 255, 255, .8) inset, 0 1px 1px rgba(0, 0, 0, .04);
+}
+
+.btn:hover {
+    background: linear-gradient(180deg, #fff, #f3f6f8);
+    box-shadow: 0 3px 8px rgba(16, 24, 40, .06);
+}
+
+/* 8) Skills chips：中身テキストのみのまま“くすみトーン”を付与 */
+.chip {
+    background: linear-gradient(180deg, #fff, #fafbfc);
+    border-color: #e7ebf0;
+}
+
+/* データ/自動化系 → セージ */
+.chip[data-ico="CSV"],
+.chip[data-ico="API"],
+.chip[data-ico="RPA"],
+.chip[data-ico="VBA"],
+.chip[data-ico="PA"] {
+    background: linear-gradient(180deg, #fff, var(--sage-50));
+    border-color: var(--sage-200);
+}
+
+/* Web実装系 → ミスト */
+.chip[data-ico="JS"],
+.chip[data-ico="HTML"],
+.chip[data-ico="CHR"] {
+    background: linear-gradient(180deg, #fff, var(--mist-50));
+    border-color: var(--mist-200);
+}
+
+/* 運用/画像/SEO → サンド */
+.chip[data-ico="SCR"],
+.chip[data-ico="IMG"],
+.chip[data-ico="SEO"],
+.chip[data-ico="UPD"] {
+    background: linear-gradient(180deg, #fff, var(--sand-50));
+    border-color: var(--sand-200);
+}
+
+/* ゴーストはさらに淡く */
+.chip--ghost {
+    background: linear-gradient(180deg, #fbfcfd, #f8fafb);
+    border-color: #edf0f4;
+    color: #45505b;
+}
+
+/* 9) モーダル画像のキャプションもくすみ色で */
+.preview--tall figcaption {
+    color: #6b7280;
 }
