@@ -35,13 +35,19 @@ body {
 
 .site-nav {
     width: 100%;
-    max-width: 900px;
+    max-width: 1000px;
+    /* ← 好きな幅に調整 */
     margin: 0 auto;
     padding: 0 12px;
     display: flex;
-    gap: 6px;
-    flex-wrap: wrap;
+    gap: 1px;
+    flex-wrap: nowrap;
+    /* 折り返さない */
+    overflow-x: auto;
+    /* はみ出したら横スクロール */
+    white-space: nowrap;
 }
+
 
 .site-nav a {
     display: inline-block;
@@ -56,6 +62,40 @@ body {
 .site-nav a.active {
     background: #f2f3f5;
 }
+
+/* Chrome / Edge (WebKit系) */
+.site-nav::-webkit-scrollbar {
+    height: 6px;
+    /* 横スクロールバーの太さ */
+}
+
+.site-nav::-webkit-scrollbar-track {
+    background: transparent;
+    /* 背景透明 */
+}
+
+.site-nav::-webkit-scrollbar-thumb {
+    background: #fff;
+    /* 白で塗りつぶし */
+    border: 1px solid #ccc;
+    /* 薄いグレーの枠線 */
+    border-radius: 9999px;
+    /* 丸みをつける */
+}
+
+.site-nav::-webkit-scrollbar-thumb:hover {
+    border-color: #999;
+    /* ホバー時だけ少し濃く */
+}
+
+/* Firefox */
+.site-nav {
+    scrollbar-width: thin;
+    scrollbar-color: #ccc #fff;
+    /* thumb枠＝グレー, 背景＝白 */
+}
+
+
 
 /* コンテナ＆セクション */
 .container {
