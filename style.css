@@ -752,3 +752,24 @@ h2::after {
 }
 
 /* ===== 既存skillsの間隔はそのまま（CSS本体に既定有り） ===== */
+
+/* デフォルトでは非表示 */
+.cat-illustration {
+  display: none;
+  text-align: center;
+  margin-top: 24px;
+}
+
+.cat-illustration img {
+  max-width: 80%;
+  height: auto;
+  opacity: 0.95;
+}
+
+/* レスポンシブ時に表示 */
+@media (max-width: 768px) {
+  .cat-illustration {
+    display: block;
+  }
+}
+
